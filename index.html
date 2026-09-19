@@ -136,7 +136,10 @@ body {
 
 /* O texto respeita o campo: nunca atravessa o corte. */
 .bloco--verde .dentro, .bloco--barro .dentro { max-width: min(1320px, 100%); }
-.bloco--verde .corpo2, .bloco--barro .corpo2 { grid-template-columns: minmax(0,1fr); max-width: 46rem; }
+/* Amarrado ao campo, como o bloco branco: em 1024 de largura os 46rem
+   passavam 183 px da parada de cor em 58% e a caixa de processo caía
+   fora do campo, em cima do objeto. */
+.bloco--verde .corpo2, .bloco--barro .corpo2 { grid-template-columns: minmax(0,1fr); max-width: min(46rem, 52%); }
 .bloco--verde .lead, .bloco--barro .lead { max-width: 30ch; }
 .bloco--verde h2, .bloco--barro h2 { max-width: 11ch; font-size: clamp(1.8rem, 4.6vw, 3.9rem); }
 /* Amarrado ao campo, não a uma medida fixa: em 1024 de largura o
