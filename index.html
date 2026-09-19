@@ -170,6 +170,10 @@ body {
 }
 .bloco--branco .eyebrow { color: var(--barro-campo); }
 .bloco--branco .eyebrow .num { color: var(--verde); }
+/* O ∞ não existe no subset latin embutido: cairia no Georgia sem querer.
+   Então a escolha é declarada, e o tamanho compensa a diferença de
+   desenho entre as duas fontes. */
+.num--simbolo { font-family: Georgia, 'Times New Roman', serif; font-size: 0.86em; }
 
 h1, h2 {
   font-family: var(--display);
@@ -181,8 +185,14 @@ h1, h2 {
      Aquele valor foi calibrado na Georgia, que o deck usava por engano:
      a Fraunces de display já vem apertada de fábrica e não aceita mais
      aperto. Em -0.01em nenhum par de LETRAS se toca. */
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   word-spacing: 0.1em;
+  /* Declarado de propósito: o `opsz` padrão do arquivo embutido é 9 (o
+     corte de TEXTO, bem mais largo). Hoje o 144 acontece porque o valor
+     inicial do CSS é o tamanho da fonte; num navegador que não aplique
+     optical sizing sozinho, o título trocaria de corte e as quebras de
+     linha mudariam no meio da apresentação. */
+  font-optical-sizing: auto;
   line-height: 0.86;
   margin: 0 0 var(--e2);
   text-transform: uppercase;
@@ -214,7 +224,7 @@ h1 { padding-bottom: 0.10em; }
 }
 p { margin: 0 0 var(--e2); max-width: 52ch; }
 p:last-child { margin-bottom: 0; }
-strong { font-weight: 600; }
+strong, b { font-weight: 600; }
 
 /* ---------- a etiqueta de processo: caixa dura, sombra chapada ---------- */
 /* Lado a lado no desktop. Empilhado, a tipografia brutalista mais a
@@ -363,16 +373,31 @@ strong { font-weight: 600; }
    abre a caixa de recorte e a margem negativa devolve o espaço ao
    layout, então nada se move de lugar. */
 .pal { display: inline-block; white-space: nowrap; }
+/* A janela de recorte, medida contra as métricas reais da Fraunces.
+   Embaixo: o Ç desce 0.199em (opsz 144) e a caixa só ia até 0.1485em —
+   a cedilha de "A PEÇA ACENDE", que é o último quadro do deck, estava
+   amputada, e a vírgula de "A MÁQUINA RODA," junto. Nas laterais: a
+   caixa mede o AVANÇO da letra, e o V e o R pintam tinta além do próprio
+   avanço. A margem negativa devolve tudo ao layout, então nada se move. */
 .anima .mask {
   display: inline-block;
   overflow: hidden;
   vertical-align: bottom;
-  padding: 0.16em 0 0.08em;
-  margin: -0.16em 0 -0.08em;
+  padding: 0.16em 0.06em 0.17em;
+  margin: -0.16em -0.06em -0.17em;
 }
+/* `font-style: normal` NÃO é redundante: a máscara envolve cada letra
+   num elemento que o navegador estiliza como itálico por padrão, e como
+   não existe Fraunces itálica ele SINTETIZA o oblíquo — cisalha cada
+   letra de cada título. Era isso que entortava a haste do N e torcia a
+   cauda do Q. Medido antes da correção: font-style computado = italic.
+   O 140% (era 118%) acompanha a janela de recorte mais funda: com a
+   janela nova, 118% deixaria o acento do Á aparecendo por baixo do
+   título antes de a revelação começar. */
 .anima .mask__i {
   display: inline-block;
-  transform: translateY(118%);
+  font-style: normal;
+  transform: translateY(140%);
   will-change: transform;
 }
 .anima .revelou .mask__i { transform: none; }
@@ -697,7 +722,7 @@ strong { font-weight: 600; }
   <!-- 7 · FECHO -->
   <section class="bloco bloco--vazado" data-titulo="Fim" data-estado="4">
     <div class="dentro surge">
-      <p class="eyebrow"><span class="num">∞</span> O ciclo não fecha</p>
+      <p class="eyebrow"><span class="num num--simbolo">∞</span> O ciclo não fecha</p>
       <h1>A peça <em>acende</em></h1>
       <p class="lead">a luz do Cerrado dentro de casa</p>
       <p class="assinatura">
@@ -851,7 +876,7 @@ strong { font-weight: 600; }
             pal.className = "pal";
             for (var k = 0; k < pedaco.length; k++) {
               var m = document.createElement("span"); m.className = "mask";
-              var i = document.createElement("i"); i.className = "mask__i";
+              var i = document.createElement("span"); i.className = "mask__i";
               i.textContent = pedaco[k];
               m.appendChild(i); pal.appendChild(m); letras.push(i);
             }
