@@ -212,13 +212,19 @@ window.iniciarObjeto = function (opcoes) {
 
     // --- o que se vê em cada estado ---
     var vPontos = 1 - suavizar(faixa(s, 0.6, 1.5)) * 0.72;
+    // O fantasma do estilhaço é uma JANELA: abre quando a peça estilhaça
+    // e fecha quando ela remonta, no mesmo compasso do `estilhaco` da
+    // geometria (3.25→3.75, fim em 4). Sem o fechamento, o sólido ficava
+    // preso em 15% de opacidade até o fim do deck: a outra peça remontava
+    // de verdade, e ninguém via.
+    var fantasma = suavizar(faixa(s, 3.3, 3.7)) * (1 - suavizar(faixa(s, 3.85, 4)));
     var vArame  = suavizar(faixa(s, 0.3, 1.1)) * (1 - suavizar(faixa(s, 2.4, 3.1))) * 0.55
-                + suavizar(faixa(s, 3.3, 3.8)) * 0.5;
+                + suavizar(faixa(s, 3.3, 3.8)) * (1 - suavizar(faixa(s, 3.85, 4))) * 0.5;
     var vSolido = suavizar(faixa(s, 1.5, 2.3));
 
     matPontos.opacity = Math.max(0.05, vPontos);
     matArame.opacity = vArame;
-    matSolido.opacity = vSolido * (1 - suavizar(faixa(s, 3.3, 3.7)) * 0.85);
+    matSolido.opacity = vSolido * (1 - fantasma * 0.85);
 
     // --- o plano de corte: a impressão subindo ---
     // Em TRANSIÇÃO só a primeira camada existe; em OPERAÇÃO ele sobe.
