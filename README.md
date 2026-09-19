@@ -58,6 +58,44 @@ que a ficha de produção usa para tudo que entra. Passo de 0,028s por
 letra — os 0,1s da ficha só servem a palavra solta; numa manchete viram
 quatro segundos.
 
+## A peça acendendo
+
+O último bloco troca o objeto abstrato pela **peça de verdade**: a
+luminária da vereda, no escuro, acendendo. É o único lugar do deck onde a
+matéria aparece sem metáfora, e é o fim da fala.
+
+O vídeo foi renderizado no Blender, em `render_acende.py`, e vale
+registrar como:
+
+- **Ela é construída camada a camada, não torneada.** 325 anéis empilhados
+  a 0,008 de altura, cada um saltando 0,006 para fora e voltando. Um lathe
+  liso daria um vaso de cerâmica; a serrilha é o que faz o olho ler
+  "impresso em 3D".
+- **O perfil é o mesmo que o objeto do deck usa.** A peça que morfa nos
+  sete blocos e a peça que acende no oitavo são a mesma silhueta.
+- **A parede é fina de propósito** (Solidify 0,018) e o PLA tem
+  `Transmission Weight 0,34`. É isso que deixa a luz atravessar entre as
+  camadas, que é o que a peça faz na mesa.
+- **A lâmpada acende como filamento**, não como interruptor: demora a
+  pegar, dá um salto, recua e assenta (chaves em 0 → 12 → 6 → 90 → 165).
+
+Regenerar:
+
+```bash
+/Applications/Blender.app/Contents/MacOS/Blender -b -P render_acende.py
+ffmpeg -y -framerate 24 -i assets/quadros/a%04d.png -c:v libx264 \
+  -preset veryslow -crf 26 -pix_fmt yuv420p -movflags +faststart \
+  assets/peca-acende.mp4
+```
+
+Medido no navegador: o brilho médio do quadro sobe de 6,1 para 23,7 e o
+pico de 71 para 246 entre o começo e o fim. A peça acende de fato, não é
+impressão de quem já sabe o que devia acontecer.
+
+Uma armadilha: **o navegador pausa vídeo mudo em aba de segundo plano.**
+Medido aqui, a peça congelava em 0,3 s. Quando a aba volta, o
+acendimento recomeça do zero em vez de mostrar meio quadro.
+
 ## Decisões
 
 - **Brutalismo com a paleta da marca.** Tipografia enorme cortada pela borda,
