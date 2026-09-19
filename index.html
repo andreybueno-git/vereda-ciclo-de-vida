@@ -281,6 +281,39 @@ strong { font-weight: 600; }
 /* Visível por padrão. .anima só entra com script rodando E documento
    visível: aba em segundo plano congela transição, e o conteúdo nunca
    pode depender de animação para existir. */
+/* ===== REVELAÇÃO POR MÁSCARA =====================================
+   Cada letra sobe de trás de uma régua invisível. É o gesto que a ficha
+   de motion do time chama de line-mask, e é o único que aguenta
+   tipografia deste tamanho: um fade em bloco numa palavra de 200px
+   parece que a página demorou a carregar, não que ela entrou.
+
+   A palavra inteira vira um bloco que não quebra (.pal), então a linha
+   continua quebrando entre PALAVRAS como sempre. Cortar por letra sem
+   isso faria a quebra acontecer no meio de "MÁQUINA".
+
+   O clip precisa de folga vertical: com line-height 0.86 e caixa alta
+   acentuada, o Á e o Ç encostam na borda e ficam decapitados. O padding
+   abre a caixa de recorte e a margem negativa devolve o espaço ao
+   layout, então nada se move de lugar. */
+.pal { display: inline-block; white-space: nowrap; }
+.anima .mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding: 0.16em 0 0.08em;
+  margin: -0.16em 0 -0.08em;
+}
+.anima .mask__i {
+  display: inline-block;
+  transform: translateY(118%);
+  will-change: transform;
+}
+.anima .revelou .mask__i { transform: none; }
+
+/* Os títulos NÃO participam do fade em bloco: quem anima neles são as
+   letras. Fazer os dois deixa o movimento sujo. */
+.anima .surge > h1, .anima .surge > h2 { opacity: 1; transform: none; transition: none; }
+
 .anima .surge > * { opacity: 0; transform: translateY(24px); }
 .anima .surge.ativo > * {
   opacity: 1; transform: none;
@@ -295,6 +328,7 @@ strong { font-weight: 600; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .anima .surge > *, .anima .surge.ativo > * { opacity: 1; transform: none; transition: none; }
+  .anima .mask__i { transform: none; }
 }
 
 @media (max-width: 950px) {
@@ -536,6 +570,63 @@ strong { font-weight: 600; }
     window.__objeto = motor;
   }
 
+  /* ---- a máscara de letras ----
+     Divide em palavras (para a quebra de linha continuar normal) e
+     dentro delas em letras, cada uma numa caixa que recorta. Preserva
+     os <em> do título: eles carregam o filete grosso da marca. */
+  function mascarar(raiz) {
+    if (raiz._mascarado) return raiz._letras || [];
+    raiz._mascarado = true;
+    var letras = [];
+
+    (function processar(no) {
+      Array.prototype.slice.call(no.childNodes).forEach(function (f) {
+        if (f.nodeType === 3) {
+          var frag = document.createDocumentFragment();
+          f.nodeValue.split(/(\s+)/).forEach(function (pedaco) {
+            if (!pedaco) return;
+            if (/^\s+$/.test(pedaco)) { frag.appendChild(document.createTextNode(" ")); return; }
+            var pal = document.createElement("span");
+            pal.className = "pal";
+            for (var k = 0; k < pedaco.length; k++) {
+              var m = document.createElement("span"); m.className = "mask";
+              var i = document.createElement("i"); i.className = "mask__i";
+              i.textContent = pedaco[k];
+              m.appendChild(i); pal.appendChild(m); letras.push(i);
+            }
+            frag.appendChild(pal);
+          });
+          no.replaceChild(frag, f);
+        } else if (f.nodeType === 1 && !f.classList.contains("pal")) {
+          processar(f);
+        }
+      });
+    })(raiz);
+
+    raiz._letras = letras;
+    return letras;
+  }
+
+  function revelarLetras(bloco) {
+    if (!document.documentElement.classList.contains("anima")) return;
+    bloco.querySelectorAll("h1, h2, .eyebrow .num").forEach(function (el) {
+      if (el._revelado) return;
+      el._revelado = true;
+      var letras = mascarar(el);
+      letras.forEach(function (l, i) {
+        // durL = 1.2s e a curva "Out" (0.25,1,0.5,1) são os tokens que a
+        // ficha de produção usa para tudo que ENTRA. O passo de 0.028s
+        // por letra é o que cabe em título grande: os 0.1s da ficha só
+        // servem a palavra solta, e numa manchete viram 4 segundos.
+        l.style.transition = "transform 1.2s cubic-bezier(0.25,1,0.5,1) " +
+                             (0.06 + i * 0.028).toFixed(3) + "s";
+      });
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { el.classList.add("revelou"); });
+      });
+    });
+  }
+
   var obs = new IntersectionObserver(function (ent) {
     ent.forEach(function (e) {
       if (!e.isIntersecting) return;
@@ -548,11 +639,33 @@ strong { font-weight: 600; }
       }
       var alvo = e.target.querySelector(".surge");
       if (alvo) alvo.classList.add("ativo");
+      revelarLetras(e.target);
     });
   }, { threshold: 0.5 });
   blocos.forEach(function (b) { obs.observe(b); });
   pontos[0].setAttribute("aria-current", "true");
   rotulo.innerHTML = "<span>etapa <b>0</b> / 7</span><span>objeto: <b>ideia</b></span>";
+
+  // Se o deck abriu em segundo plano, as transições estavam congeladas e
+  // nada foi revelado. Quando a aba ganha foco, arma o que está na tela.
+  // Um deck de aula costuma ser aberto assim: fica pronto numa aba
+  // enquanto o professor ainda fala.
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState !== "visible" || reduzido) return;
+    document.documentElement.classList.add("anima");
+    blocos.forEach(function (b) {
+      var r = b.getBoundingClientRect();
+      if (r.top < innerHeight && r.bottom > 0) {
+        var alvo = b.querySelector(".surge");
+        if (alvo) alvo.classList.add("ativo");
+        revelarLetras(b);
+      }
+    });
+  });
+
+  // Diagnóstico: a guarda de visibilidade impede verificar a máscara em
+  // aba oculta, então o gatilho fica acessível.
+  window.__deck = { revelarLetras: revelarLetras, mascarar: mascarar, blocos: blocos };
 
   var dica = document.getElementById("dica"), sumiu = false;
   deck.addEventListener("scroll", function () {
@@ -564,6 +677,11 @@ strong { font-weight: 600; }
       if (getComputedStyle(el).opacity !== "1") {
         el.style.transition = "none"; el.style.opacity = "1"; el.style.transform = "none";
       }
+    });
+    // Nenhuma letra pode ficar escondida atrás da máscara, aconteça o
+    // que acontecer com os temporizadores.
+    document.querySelectorAll("h1, h2, .eyebrow .num").forEach(function (el) {
+      el.classList.add("revelou");
     });
   }, 9000);
 })();

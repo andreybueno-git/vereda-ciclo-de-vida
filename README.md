@@ -35,6 +35,29 @@ Depois `http://localhost:8811`. No VS Code, **F5** ou *Open with Live Server*.
 
 Navegar: setas `←` `→` (ou `↑` `↓`), barra de espaço, `Home` e `End`.
 
+## O motion das letras
+
+Os títulos não aparecem em bloco: **cada letra sobe de trás de uma régua
+invisível**, em cascata. É o gesto que a ficha de motion do time chama de
+line-mask, e é o único que aguenta tipografia deste tamanho — um fade em
+bloco numa palavra de 200px parece que a página demorou a carregar, não
+que ela entrou.
+
+Dois detalhes que custaram atenção:
+
+- **A palavra inteira vira um bloco que não quebra.** Cortando por letra
+  sem isso, a linha quebraria no meio de "MÁQUINA".
+- **O recorte precisa de folga vertical.** Com `line-height: 0.86` e caixa
+  alta acentuada, o Á e o Ç encostavam na borda e ficavam decapitados. O
+  padding abre a caixa de recorte e a margem negativa devolve o espaço ao
+  layout, então nada muda de lugar. Medido: 0 letras cortadas, mesma
+  quantidade de quebras de linha que antes.
+
+Valores: curva `cubic-bezier(0.25, 1, 0.5, 1)` e duração 1,2s, os tokens
+que a ficha de produção usa para tudo que entra. Passo de 0,028s por
+letra — os 0,1s da ficha só servem a palavra solta; numa manchete viram
+quatro segundos.
+
 ## Decisões
 
 - **Brutalismo com a paleta da marca.** Tipografia enorme cortada pela borda,
