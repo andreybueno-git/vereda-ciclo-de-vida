@@ -174,7 +174,15 @@ body {
 h1, h2 {
   font-family: var(--display);
   font-weight: 500;
-  letter-spacing: -0.045em;
+  /* MEDIDO em canvas, com a Fraunces de verdade a 176 px: o -0.045em
+     produzia 12 pares de letras com a tinta sobreposta (pior caso 9 px
+     de invasão — o N entrando no A de MÁQUINA, o Z no E de FAZER) e
+     espremia o espaço entre palavras para 21 px, que lê "MÁQUINADE".
+     Aquele valor foi calibrado na Georgia, que o deck usava por engano:
+     a Fraunces de display já vem apertada de fábrica e não aceita mais
+     aperto. Em -0.01em nenhum par de LETRAS se toca. */
+  letter-spacing: -0.01em;
+  word-spacing: 0.1em;
   line-height: 0.86;
   margin: 0 0 var(--e2);
   text-transform: uppercase;
@@ -400,6 +408,96 @@ strong { font-weight: 600; }
   .proc { box-shadow: 5px 5px 0 currentColor; }
 }
 
+
+/* ================= O PRELOAD =================
+   Não é uma rosquinha girando: é a peça sendo IMPRESSA. O progresso de
+   carga move o plano de corte de baixo para cima, exatamente como a
+   impressora faz, e quando a peça fica inteira e acesa a tela sobe.
+   É o argumento do deck acontecendo antes do deck começar.
+
+   A imagem é um quadro do render de verdade, 420 px de largura e 3 KB,
+   embutida: um preload que precisa baixar arquivo para aparecer não é
+   preload. */
+#pre {
+  position: fixed; inset: 0; z-index: 60;
+  background: var(--carvao);
+  display: grid; place-items: center;
+  overflow: hidden;
+  --p: 0;
+  transition: opacity 0.7s cubic-bezier(0.25, 1, 0.5, 1),
+              visibility 0s linear 0.7s;
+}
+#pre.pronto { opacity: 0; visibility: hidden; pointer-events: none; }
+/* Se o JS morrer, a tela sai sozinha: a apresentação nunca fica presa
+   atrás dela. */
+@keyframes preSaiSozinha { to { opacity: 0; visibility: hidden; } }
+#pre { animation: preSaiSozinha 0.8s ease 9s forwards; }
+
+.pre__palco {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+}
+.pre__peca {
+  position: relative;
+  width: min(42vw, 30vh * 1.78, 460px);
+  aspect-ratio: 16 / 9;
+  /* Sem `filter` aqui: filtro cria grupo de composição e o
+     mix-blend-mode do <img> passaria a misturar com o nada em vez de
+     misturar com o carvão do fundo. Medido: a caixa preta voltava. */
+}
+.pre__peca img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  /* O quadro do render tem fundo preto e, sobre o carvão da página, ele
+     aparecia como uma caixa preta em volta da peça. Em `screen` o preto
+     some no fundo e sobra só a luz: fica a peça, não a foto da peça. */
+  mix-blend-mode: screen;
+  /* O preto do render não é preto puro (medido: rgb 13,12,8 contra o
+     carvão 30,27,24), então em `screen` sobrava a silhueta retangular do
+     quadro. A máscara radial apaga a borda e sobra só a luz. */
+  -webkit-mask-image: radial-gradient(62% 68% at 50% 52%, #000 38%, transparent 100%);
+          mask-image: radial-gradient(62% 68% at 50% 52%, #000 38%, transparent 100%);
+  /* imprime de baixo para cima */
+  clip-path: inset(calc((1 - var(--p)) * 100%) 0 0 0);
+}
+/* o filete dourado é o bico da impressora, e fica na altura da camada */
+.pre__bico {
+  position: absolute; left: -6%; right: -6%;
+  top: calc((1 - var(--p)) * 100%);
+  height: 2px; background: var(--ouro);
+  box-shadow: 0 0 18px rgba(216, 163, 74, 0.55);
+  opacity: calc(1 - var(--p) * var(--p));
+}
+
+.pre__texto {
+  position: absolute; left: clamp(1.25rem, 4vw, 4rem);
+  bottom: clamp(1.5rem, 6vh, 4rem);
+  display: grid; gap: 0.45rem;
+}
+.pre__marca {
+  font-family: var(--display); font-size: clamp(1.4rem, 2.4vw, 2.1rem);
+  font-weight: 500; color: var(--ouro); margin: 0; line-height: 1;
+}
+.pre__linha {
+  width: clamp(9rem, 22vw, 20rem); height: var(--borda);
+  background: currentColor; opacity: 0.22; position: relative;
+}
+.pre__linha::after {
+  content: ""; position: absolute; inset: 0 auto 0 0;
+  width: calc(var(--p) * 100%); background: var(--ouro); opacity: 1;
+}
+.pre__rot {
+  margin: 0; font-size: var(--t-micro); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.2em;
+  display: flex; gap: 0.9rem;
+}
+.pre__rot b { color: var(--ouro); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+@media (prefers-reduced-motion: reduce) {
+  #pre { transition: opacity 0.2s linear; animation-delay: 3s; }
+  .pre__bico { display: none; }
+}
+
 /* Plano B: se o projetor morrer, isto tem de sair no papel legível.
    Sem esta regra o PDF sai uma página só, com texto branco sobre
    branco. */
@@ -422,6 +520,20 @@ strong { font-weight: 600; }
 </style>
 </head>
 <body>
+
+<div id="pre" aria-hidden="true">
+  <div class="pre__palco">
+    <div class="pre__peca">
+      <img src="data:image/jpeg;base64,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" alt="">
+      <div class="pre__bico"></div>
+    </div>
+  </div>
+  <div class="pre__texto">
+    <p class="pre__marca">vereda</p>
+    <div class="pre__linha"></div>
+    <p class="pre__rot"><span>imprimindo a apresentação</span><b id="pre-pct">0%</b></p>
+  </div>
+</div>
 
 <canvas id="palco" aria-hidden="true"></canvas>
 <video id="peca" muted playsinline preload="auto"
@@ -776,6 +888,23 @@ strong { font-weight: 600; }
     });
   }
 
+  /* Enquanto a tela de carga está em cima, a entrada do slide fica na
+     fila: sem isto as letras subiriam escondidas atrás dela e o
+     apresentador veria o título já parado quando a tela saísse. */
+  var preNaFrente = !!document.getElementById("pre");
+  var fila = [];
+  function animarBloco(b) {
+    if (preNaFrente) { if (fila.indexOf(b) < 0) fila.push(b); return; }
+    var alvo = b.querySelector(".surge");
+    if (alvo) alvo.classList.add("ativo");
+    revelarLetras(b);
+  }
+  function soltarFila() {
+    preNaFrente = false;
+    var copia = fila.slice(); fila.length = 0;
+    copia.forEach(animarBloco);
+  }
+
   var obs = new IntersectionObserver(function (ent) {
     ent.forEach(function (e) {
       // Razão real, não "encostou". isIntersecting é verdadeiro para
@@ -792,9 +921,7 @@ strong { font-weight: 600; }
         rotulo.innerHTML = "<span>etapa <b>" + (i) + "</b> / 7</span><span>objeto: <b>" + NOMES[i] + "</b></span>";
         if (motor) motor.definirEstado(parseFloat(e.target.dataset.estado));
       }
-      var alvo = e.target.querySelector(".surge");
-      if (alvo) alvo.classList.add("ativo");
-      revelarLetras(e.target);
+      animarBloco(e.target);
     });
     acenderPeca(atual === blocos.length - 1);
   }, { threshold: 0.5 });
@@ -821,11 +948,7 @@ strong { font-weight: 600; }
     document.documentElement.classList.add("anima");
     blocos.forEach(function (b) {
       var r = b.getBoundingClientRect();
-      if (r.top < innerHeight && r.bottom > 0) {
-        var alvo = b.querySelector(".surge");
-        if (alvo) alvo.classList.add("ativo");
-        revelarLetras(b);
-      }
+      if (r.top < innerHeight && r.bottom > 0) animarBloco(b);
     });
   });
 
@@ -854,14 +977,97 @@ strong { font-weight: 600; }
   // marcava o documento inteiro, e quem falasse dez segundos na capa
   // perdia a animação de todos os slides seguintes.
   setTimeout(function () {
-    document.querySelectorAll(".surge.ativo > *").forEach(function (el) {
-      if (getComputedStyle(el).opacity !== "1") {
-        el.style.transition = "none"; el.style.opacity = "1"; el.style.transform = "none";
-      }
+    blocos.forEach(function (b) {
+      var r = b.getBoundingClientRect();
+      if (r.top >= innerHeight || r.bottom <= 0) return;
+      var alvo = b.querySelector(".surge");
+      if (alvo) alvo.classList.add("ativo");
+      b.querySelectorAll(".surge > *").forEach(function (el) {
+        if (getComputedStyle(el).opacity !== "1") {
+          el.style.transition = "none"; el.style.opacity = "1"; el.style.transform = "none";
+        }
+      });
+      b.querySelectorAll("h1, h2, .eyebrow .num").forEach(function (el) {
+        el.classList.add("revelou");
+      });
     });
-    document.querySelectorAll(".surge.ativo h1, .surge.ativo h2, .surge.ativo .eyebrow .num")
-      .forEach(function (el) { el.classList.add("revelou"); });
   }, 9000);
+
+  /* ---- o preload ----
+     O progresso é medido, não inventado: as fontes (que são 117 KB de
+     base64 e mudam TODA a tipografia quando chegam), o motor 3D com o
+     primeiro quadro desenhado, e o vídeo da peça com buffer suficiente
+     para tocar. A barra persegue o alvo com amortecimento, como o morph
+     do objeto, então nunca dá saltos secos.
+
+     Três garantias, porque isto roda na frente de uma turma:
+     1. trava de 6,5 s — carga lenta não vira apresentação parada;
+     2. a tela também sai por animação CSS aos 9 s, se o JS morrer;
+     3. quando ela sobe, a revelação por letra do primeiro slide é
+        rearmada, senão as letras teriam subido escondidas atrás dela. */
+  var pre = document.getElementById("pre");
+  if (pre) {
+    var pct = document.getElementById("pre-pct");
+    var pesos = { fontes: 0.4, objeto: 0.3, video: 0.3 };
+    var feito = { fontes: 0, objeto: 0, video: 0 };
+    var mostrado = 0, encerrado = false;
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () { feito.fontes = 1; });
+    } else { feito.fontes = 1; }
+
+    if (motor && motor.amostrar) {
+      var espiaObjeto = setInterval(function () {
+        var a = motor.amostrar();
+        if (a && a.pintados > 0) { feito.objeto = 1; clearInterval(espiaObjeto); }
+      }, 120);
+      setTimeout(function () { feito.objeto = 1; clearInterval(espiaObjeto); }, 4000);
+    } else { feito.objeto = 1; }
+
+    if (video) {
+      if (video.readyState >= 3) feito.video = 1;
+      else {
+        video.addEventListener("canplaythrough", function () { feito.video = 1; });
+        video.addEventListener("error", function () { feito.video = 1; });
+        setTimeout(function () { feito.video = 1; }, 5000);
+      }
+    } else { feito.video = 1; }
+
+    var travaPre = setTimeout(function () { encerrar(); }, 6500);
+
+    function encerrar() {
+      if (encerrado) return;
+      encerrado = true;
+      clearTimeout(travaPre);
+      pre.style.setProperty("--p", "1");
+      if (pct) pct.textContent = "100%";
+      setTimeout(function () {
+        pre.classList.add("pronto");
+        if (!reduzido && document.visibilityState === "visible") {
+          document.documentElement.classList.add("anima");
+        }
+        // A entrada do primeiro slide começa AGORA, que é quando dá para
+        // ver. Nada é desfeito: ela só estava na fila.
+        soltarFila();
+        if (!fila.length) {
+          blocos.forEach(function (b) {
+            var r = b.getBoundingClientRect();
+            if (r.top < innerHeight && r.bottom > 0) animarBloco(b);
+          });
+        }
+      }, 420);
+    }
+
+    (function passoPre() {
+      if (encerrado) return;
+      var alvoPre = feito.fontes * pesos.fontes + feito.objeto * pesos.objeto + feito.video * pesos.video;
+      mostrado += (alvoPre - mostrado) * 0.10;
+      pre.style.setProperty("--p", mostrado.toFixed(3));
+      if (pct) pct.textContent = Math.round(mostrado * 100) + "%";
+      if (alvoPre >= 1 && mostrado > 0.97) { encerrar(); return; }
+      requestAnimationFrame(passoPre);
+    })();
+  }
 })();
 </script>
 </body>
