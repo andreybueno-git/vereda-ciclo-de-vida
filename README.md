@@ -1,167 +1,119 @@
-# Máquina de fazer coisas
+# vereda — da ideia à luz
 
-**Ciclo de vida do serviço (ITIL) aplicado à vereda**
-Gerenciamento de Serviços de TI · apresentação em 19/09/2026
+Apresentação interativa de **16 capítulos** sobre o serviço da Vereda, SLM e uso limitado de IA. A experiência começa com um notebook fechado: você abre a tampa, liga o computador e escolhe no Terminal entre a apresentação e um jogo. A narrativa acompanha a ideia no notebook, a revisão e o fatiamento, o acordo com o cliente, a impressão e a peça acesa. Cada capítulo mantém acesso ao conteúdo acadêmico completo pelo botão **Conteúdo de SLM**.
 
-**No ar:** https://andreybueno-git.github.io/vereda-ciclo-de-vida/
+O notebook tem nove aplicativos: **Terminal, Internet, Projeto.stl, Fatiador, Acordo, Guia SLM, Luz, Pega-luz e Palavra**. Seu teclado 3D, mouse e trackpad controlam esse ambiente local; cinco adesivos personalizam a carcaça. O computador ampliado permite explorar o mesmo modelo, inspecionar camadas e percorrer as confirmações de um pedido. **Arquivo, aprovação, pagamento e envio à Bambu são uma simulação local.** Não há upload, cobrança, transmissão para impressora ou registro de pedido em serviço externo.
 
----
+## Acessar
 
-## Duas folhas, uma apresentação
+[Apresentação no GitHub Pages](https://andreybueno-git.github.io/vereda-ciclo-de-vida/) · [Repositório](https://github.com/andreybueno-git/vereda-ciclo-de-vida)
 
-O deck junta as duas atividades da disciplina aplicadas à vereda:
+O GitHub Pages publica a raiz da branch `main`. Bibliotecas, fontes e modelos ficam no próprio repositório.
 
-| Folha | Onde está no deck |
-|---|---|
-| **12/09 · Planejamento estratégico e ciclo de vida** (5 etapas, os 5 processos do novo serviço, decisão sobre IA) | capa, 01 a 05 e 06 |
-| **19/09 · Desenho do serviço: Gerenciamento do Nível de Serviço (SLM)** (itens 1 a 8) | 02·1 a 02·5, dentro do Desenho, que é onde o SLM mora no ITIL |
-| **19/09 · Segurança, continuidade e qualidade do uso de IA** (a, b, c, d) | 06·1 e 06·2, logo depois da decisão sobre IA |
+## Abrir localmente
 
-Os slides do SLM repetem o desenho da folha em papel: cada resposta numa
-caixa com a faixa do número em cima.
+Dentro da pasta da apresentação, execute no Terminal:
 
-As respostas da folha de SLM foram escritas por três redações
-independentes (rigor ITIL, realismo de uma oficina de uma pessoa, e a
-leitura de quem corrige), julgadas item a item por três juízes e
-revisadas por dois céticos: um de ITIL e um caçando número inventado. Os
-céticos derrubaram 10 pontos, entre eles a ordem do processo (os
-contratos de apoio, UC, são conferidos ANTES de publicar o SLA) e uma
-meta impossível para uma impressora só ("entrega 100 % na data" virou
-"prazo informado 100 %, por lei" + "postagem na data", com todo atraso
-contado). Todo número sai de um fato da vereda ou de uma conta a partir
-dele: 11 h 41 de máquina por cúpula, R$ 80/kg, margem de 120 %, os 5
-dias de resposta do Decreto 7.962/2013, os 7 dias de arrependimento do
-CDC.
-
-## A abertura: a peça que você acende
-
-A primeira tela é a luminária apagada. O ponteiro injeta luz numa
-simulação de fluido na GPU e a peça acende por onde a luz escorre; a luz
-dissipa e apaga sozinha. Um medidor compara o **medido** com a **meta**
-(80 % da peça): quando passa, a luminária acende inteira e fica. É o
-SLM numa linha: o serviço é uma promessa com número, e ela só vale se
-alguém medir.
-
-- Os dois quadros (apagada e acesa) saem do Blender com a mesma câmera,
-  em `render_hero.py`: alinhados pixel a pixel.
-- O medidor só conta células onde a luminária está de fato (lidas da
-  própria imagem acesa): passar a mão no fundo preto não enche a meta.
-- Sem WebGL ou com movimento reduzido, a peça já aparece acesa e o
-  medidor não finge medir.
-- Teclado e passador: tecla **L** ou o botão "ou acenda aqui".
-
-## A ideia
-
-O deck tem **um objeto 3D só**, do começo ao fim, que **morfa** entre as
-cinco etapas do ciclo. Ele não ilustra o processo: ele é o processo.
-
-| Etapa | O que o objeto vira |
-|---|---|
-| Estratégia | nuvem de pontos à deriva: a ideia antes da matéria |
-| Desenho | o objeto se abre em fatias separadas: a tela do fatiador |
-| Transição | as fatias se juntam, mas só a primeira camada é sólida |
-| Operação | o sólido sobe do plano de corte, girando: a produção |
-| Melhoria contínua | estilhaça, o perfil muda, e remonta **outra peça** |
-
-A última é o ponto da apresentação: melhoria contínua não encerra o ciclo,
-devolve ele para o começo. Por isso o objeto não para numa forma final.
-
-## Como abrir
-
-Precisa de HTTP por causa do WebGL:
-
-```bash
-python3 -m http.server 8811
+```sh
+python3 -m http.server 8842 --bind 127.0.0.1
 ```
 
-Depois `http://localhost:8811`. No VS Code, **F5** ou *Open with Live Server*.
+Abra [http://127.0.0.1:8842/](http://127.0.0.1:8842/). Mantenha o Terminal aberto; `Ctrl+C` encerra o servidor. Use HTTP, não a abertura direta por `file://`, para carregar os GLBs.
 
-Navegar: setas `←` `→` (ou `↑` `↓`), barra de espaço, `Home` e `End`. `F` entra em tela cheia; `L` acende a peça na abertura.
+No Mac, `Abrir apresentacao.command` é uma alternativa: inicia o servidor numa porta livre e abre o navegador. Preserve a pasta inteira; fontes, bibliotecas e assets de execução são locais.
 
-## O motion das letras
+## Navegar e experimentar
 
-Os títulos não aparecem em bloco: **cada letra sobe de trás de uma régua
-invisível**, em cascata. É o gesto que a ficha de motion do time chama de
-line-mask, e é o único que aguenta tipografia deste tamanho — um fade em
-bloco numa palavra de 200px parece que a página demorou a carregar, não
-que ela entrou.
+Experimente esta sequência:
 
-Dois detalhes que custaram atenção:
+1. Clique no notebook fechado ou em **Abrir notebook**. Com a tampa aberta, acione **Ligar notebook**. A marca aparece na tela durante a breve inicialização visual.
+2. No Terminal, escolha **Iniciar apresentação** ou digite `-- start vereda` e pressione Enter. `start vereda`, sem os dois traços, também funciona. A transição aproxima a tela e libera a história; a sequência de 16 capítulos começa em seguida.
+3. Para brincar antes ou depois, escolha **Pega-luz** no Terminal ou digite `open jogo`. Clique em **Jogar**; use setas, WASD ou os botões de direção para alcançar os oito pontos de luz. Para adivinhar palavras de cinco letras, abra **Palavra** ou digite `start termo`. `help` mostra os outros comandos; `open projeto` abre o projeto demonstrativo.
+4. Durante a história, entre no computador pelo botão do capítulo Desenho. No Projeto.stl, gire a prévia, escolha a cor e confirme a revisão humana. Abra o Fatiador e inspecione as camadas; no Acordo, confirme prévia, preço, prazo, aprovação e pagamento simulados. O envio leva à impressão conduzida pela rolagem.
+5. Clique em **Música** para autorizar a trilha original e os sons de interação. Em Ajustes de áudio, altere volume, silencie tudo ou desligue somente os sons das teclas. Nada toca antes dessa ativação explícita.
 
-- **A palavra inteira vira um bloco que não quebra.** Cortando por letra
-  sem isso, a linha quebraria no meio de "MÁQUINA".
-- **O recorte precisa de folga vertical.** Com `line-height: 0.86` e caixa
-  alta acentuada, o Á e o Ç encostavam na borda e ficavam decapitados. O
-  padding abre a caixa de recorte e a margem negativa devolve o espaço ao
-  layout, então nada muda de lugar. Medido: 0 letras cortadas, mesma
-  quantidade de quebras de linha que antes.
+**Ampliar computador** abre os mesmos aplicativos em um dialog, com a mesma janela, entrada e estado. Na abertura, o mouse e o desktop interativo permanecem disponíveis também em janelas estreitas; Ampliar é opcional. Durante a história, até 760 px, o desktop abre ampliado para não cobrir o texto que rola. Teclado, mouse e trackpad 3D funcionam quando o desktop está projetado na cena. **Ir direto à apresentação** dispensa a abertura, e links diretos como `#desenho` preservam o capítulo solicitado.
 
-Valores: curva `cubic-bezier(0.25, 1, 0.5, 1)` e duração 1,2s, os tokens
-que a ficha de produção usa para tudo que entra. Passo de 0,028s por
-letra — os 0,1s da ficha só servem a palavra solta; numa manchete viram
-quatro segundos.
+- Role para acompanhar as transformações. Setas, PageUp/PageDown e Espaço navegam entre capítulos; Home/End vão ao começo/fim.
+- `I` abre o índice; `N` abre o conteúdo completo do capítulo. Os atalhos da apresentação não devem interferir em campos, desktop ou dialogs.
+- Os botões do cabeçalho controlam pausa e tela cheia. Os controles da peça permitem girar e alternar a luz. O ponteiro também produz uma inclinação discreta da cena; pausa e movimento reduzido desativam essa resposta.
+- Clique nas teclas 3D para digitar no terminal, ou use seu teclado. Arraste o mouse/trackpad do notebook para mover o cursor interno e dê um clique curto para acionar o controle apontado. Esses gestos não controlam o sistema operacional.
+- No notebook, abra, minimize e feche os aplicativos. Expandir move o mesmo desktop para o dialog; **Voltar ao notebook** devolve-o à cena. O editor `VeredaStudio` é um módulo separado e mantém compatibilidade de estado, sem substituir o computador no comando de expandir.
+- No modelo 3D, arraste para girar. Com o canvas em foco, setas giram, `+`/`−` ajustam a distância e Home recentra.
+- Confirme revisão humana antes de fatiar. Apresente prévia, preço e prazo antes de confirmar aprovação e pagamento simulados. Só então o envio é liberado.
+- A inspeção de camadas corta a **visualização**, sem reduzir a peça do pedido. Mudanças que invalidam o acordo exigem novas confirmações.
+- O aplicativo Luz mostra a peça em um ambiente com aparador, janela, livros e planta; seu controle de luz altera a atmosfera junto da luminária.
+- Esc fecha dialogs e janelas conforme o contexto. A abertura oferece um caminho explícito direto para a apresentação.
 
-## A peça acendendo
+## Internet no notebook
 
-O último bloco troca o objeto abstrato pela **peça de verdade**: a
-luminária da vereda, no escuro, acendendo. É o único lugar do deck onde a
-matéria aparece sem metáfora, e é o fim da fala.
+Abra **Internet** no dock ou digite `open internet` no Terminal. O campo aceita uma pesquisa ou endereço HTTP/HTTPS. As teclas do notebook também escrevem nesse campo.
 
-O vídeo foi renderizado no Blender, em `render_acende.py`, e vale
-registrar como:
+- `open loja`: visita [Vereda Cerrado](https://veredacerrado.com/) em uma nova aba.
+- `pesquisar luminárias 3D`: pesquisa o termo no Google em uma nova aba.
+- `open web` e `open navegador`: aliases do app Internet.
 
-- **Ela é construída camada a camada, não torneada.** 325 anéis empilhados
-  a 0,008 de altura, cada um saltando 0,006 para fora e voltando. Um lathe
-  liso daria um vaso de cerâmica; a serrilha é o que faz o olho ler
-  "impresso em 3D".
-- **O perfil é o mesmo que o objeto do deck usa.** A peça que morfa nos
-  sete blocos e a peça que acende no oitavo são a mesma silhueta.
-- **A parede é fina de propósito** (Solidify 0,018) e o PLA tem
-  `Transmission Weight 0,34`. É isso que deixa a luz atravessar entre as
-  camadas, que é o que a peça faz na mesa.
-- **A lâmpada acende como filamento**, não como interruptor: demora a
-  pegar, dá um salto, recua e assenta (chaves em 0 → 12 → 6 → 90 → 165).
+A loja publicada é real e abre fora da apresentação. Seus headers atuais (`X-Frame-Options: DENY`, CSP `frame-ancestors 'none'`) impedem exibi-la dentro do notebook por iframe. O app oferece atalhos reais; não simula resultados, não altera a loja e não faz requisições externas antes de uma ação. Os pedidos no Fatiador/Acordo continuam demonstrativos e separados da loja.
 
-Regenerar:
+## Palavra: uma pausa para jogar
 
-```bash
-/Applications/Blender.app/Contents/MacOS/Blender -b -P render_acende.py
-ffmpeg -y -framerate 24 -i assets/quadros/a%04d.png -c:v libx264 \
-  -preset veryslow -crf 26 -pix_fmt yuv420p -movflags +faststart \
-  assets/peca-acende.mp4
-```
+Abra **Palavra** no dock ou use `start termo` no Terminal. Também funcionam `start palavra`, `open termo` e `open palavra`. O Pega-luz continua disponível.
 
-Medido no navegador: o brilho médio do quadro sobe de 6,1 para 23,7 e o
-pico de 71 para 246 entre o começo e o fim. A peça acende de fato, não é
-impressão de quem já sabe o que devia acontecer.
+Descubra uma palavra de **cinco letras em seis tentativas**. As peças indicam letra na posição certa, letra em outra posição ou letra ausente; letras repetidas respeitam a quantidade na resposta. Acentos e cedilha são normalizados. Palavras fora do banco não gastam tentativa. Use o teclado da tela, seu teclado ou as teclas 3D do notebook; Enter confirma e Apagar corrige. **Nova palavra** inicia outra rodada, sem limite diário.
 
-Uma armadilha: **o navegador pausa vídeo mudo em aba de segundo plano.**
-Medido aqui, a peça congelava em 0,3 s. Quando a aba volta, o
-acendimento recomeça do zero em vez de mostrar meio quadro.
+A rodada fica salva neste navegador, inclusive o palpite em andamento. O banco reúne 240 respostas comuns e 18.153 palavras aceitas.
 
-## Decisões
+É um jogo local inspirado na mecânica de [Termo](https://term.ooo/), com interface própria da Vereda. Funciona dentro do computador da apresentação. Consulte `docs/palavra-dicionario.md` para a origem e a licença do vocabulário.
 
-- **Brutalismo com a paleta da marca.** Tipografia enorme cortada pela borda,
-  campos de cor chapada com parada dura em 58%, sombra offset sem desfoque,
-  zero raio. A cor acaba, não desbota.
-- **O objeto sangra por fora do campo.** Cobrindo a tela inteira, ele sumia em
-  três dos oito blocos e deixava de ser o assunto.
-- **O dourado obedece o kit da marca:** só aparece na peça acesa, que aqui é o
-  estado 3 do objeto e mais nada.
-- **O corte da impressão é um plano de recorte de verdade**, não máscara
-  desenhada por cima: a borda do que já foi impresso acompanha a silhueta em
-  qualquer ângulo.
-- **Nada externo.** Fontes embutidas em base64 e `three.min.js` local. Numa sala
-  sem internet, o CDN deixaria o objeto de fora e a apresentação perderia o
-  assunto.
+## Conteúdo e limites da demonstração
 
-## Medições
+`docs/respostas-slm.json` é a fonte das respostas finais e dos dez apontamentos dos revisores. `docs/folha-slm-respondida.html` conserva a folha respondida. `story-content.js` organiza 16 capítulos e seus fragmentos completos, com rastreamento até as fontes. A narrativa visual é uma síntese; os detalhes mantêm qualificadores, tabela de indicadores e as dez etapas do fluxo.
 
-- Contraste: o Barro do kit (`#B4633C`) dá 3,93 sobre branco quente e reprova
-  para texto de corpo. O campo de sangria usa `#8C4A28`, medido em 6,03. O Barro
-  original continua nos acentos e rótulos.
-- Amortecimento do morph em 0,10, a faixa que a ficha de motion do time fixa
-  (0,08–0,12). Abaixo arrasta, acima pisca entre estados. É a única curva do
-  morph: empilhar um easing por cima somaria duas curvas.
-- Giro em loop sem easing. Curva num giro contínuo faz o objeto pulsar uma vez
-  por volta, e num telão o olho pega.
+A ordem preservada é **SLR → conferir UC → acordar SLA → monitorar → revisar → SIP**. IA fica no Desenho da encomenda, sem dados pessoais, com revisão humana. O prazo do cliente reúne fila, produção e frete cotado; aprovação e pagamento precedem a impressão.
+
+A luminária da cena é um estudo visual compartilhado pelo mundo 3D, desktop e estúdio. Ela não tem medição de fabricação nesta entrega. Tempos, custos e metas da cúpula descrita na folha **não são medições desse modelo demonstrativo**. O arquivo STL e seu fatiamento são demonstrativos; a modelagem de impressora é uma representação autoral para narrativa, não CAD de fabricação nem conexão com uma Bambu real. A inicialização na tela do notebook é uma sequência cênica, não uma medição do progresso de download.
+
+## Arquivos em uso
+
+| Arquivo/pasta | Responsabilidade |
+|---|---|
+| `index.html` | Capítulos, controles e integração dos scripts da versão ativa. |
+| `atelier.css`, `atelier.js` | Layout, navegação, índice, conteúdo completo e integração dos módulos. |
+| `story-content.js`, `docs/` | Conteúdo acadêmico, rastreabilidade e documentos-fonte. |
+| `atelier-forms.js` | Factory `VeredaForms.createLamp`, compartilhada pelas três prévias. |
+| `atelier-scene.js` | Cena, câmera, progressão da impressão e projeção do desktop no notebook. |
+| `notebook-desktop.js`, `notebook-desktop.css` | Desktop Vereda OS, aplicativos e fluxo interativo dentro da tela. |
+| `notebook-web.js`, `notebook-web.css` | App Internet: barra de busca/endereço, atalho da loja publicada e navegação real em nova aba. |
+| `notebook-words.js`, `notebook-words.css`, `notebook-word-list.js` | Palavra: jogo local de cinco letras, teclado, pistas e vocabulário. |
+| `notebook-entry.js`, `notebook-entry.css` | Abertura da tampa, botão de ligar, inicialização visual, escolha no Terminal e transição para a história. |
+| `notebook-input.js` | `VeredaHardware`: separa os keycaps do GLB em 73 teclas, associa a entrada ao desktop e controla mouse, trackpad e cursor interno. |
+| `notebook-stickers.js` | Cinco adesivos locais: Sol, Camadas, Código, Palmas e Vereda, aplicados à base e moldura do notebook. |
+| `studio.js`, `studio.css` | Editor de projeto separado, com dialog, inspeção de camadas e contrato de estado compatível com o desktop. |
+| `light-room.js` | Ambiente 3D autoral do aplicativo Luz, com iluminação ligada à mesma luminária. |
+| `atelier-audio.js`, `atelier-audio.css` | Trilha instrumental original por Web Audio, sons de interação e controles opt-in, sem downloads. |
+| `assets/vendor/` | Three.js **r128**, GLTFLoader compatível e licença, sem CDN. |
+| `assets/brand/` | Logo e ícone oficiais, Manrope variável 200–800, licença e proveniência. |
+| `assets/atelier/` | Notebook e impressora em GLB, fonte Blender, previews, manifestos e validação. |
+
+Notebook e impressora foram gerados no [Higgsfield 3D Jutsu — Vereda Atelier](https://higgsfield.ai/3d-jutsu/36a75bfe-6671-48b3-8fa1-da06ea76be27), revisão 2. A execução carrega `assets/atelier/atelier.glb`; há também `notebook.glb` e `printer.glb` isolados. Coordenadas, pivôs e proveniência estão em `assets/atelier/README.md` e `manifest.json`.
+
+`VeredaDesktop.expand()`/`collapse()` movem o mesmo elemento entre cena e dialog, sem recriar o aplicativo. `VeredaDesktop` e o editor separado `VeredaStudio` também podem trocar snapshots por `getState()`/`syncState()` e callbacks `onChange`, sem emitir um ciclo de alterações. Cores, carga do projeto, revisão, fatiamento, camadas, acordo, aprovação e pagamento compõem esse contrato. A mesma factory de luminária alimenta os três contextos visuais.
+
+O ZIP de entrega contém a versão ativa. Arquivos históricos como `boot.js`/`boot.css`, `surreal.*`, `fonts.css`, `notes.js`, `higgsfield-scene.js`, bibliotecas antigas na raiz e `assets/higgsfield/` podem continuar na pasta de trabalho, mas **ficam fora do ZIP** e não são carregados pelo `index.html` atual. O preloader de tela inteira foi substituído pela entrada no notebook.
+
+## Estado da verificação
+
+- **Conteúdo:** 16 IDs únicos; as 126 strings não vazias de `final` foram encontradas literalmente nos detalhes. Fluxo de dez etapas, tabela de seis indicadores e qualificadores conferidos. O JSON foi comparado byte a byte com a fonte original.
+- **Estúdio:** sintaxe e testes isolados de ordem das etapas, fallback sem WebGL, camadas, invalidação das confirmações, envio único e reabertura passaram.
+- **Desktop e sincronização:** o fluxo de preparação/envio foi verificado em navegador isolado, sem erros registrados nessa verificação. Terminal, Pega-luz, teclas físicas, mouse e trackpad tiveram seus caminhos principais conferidos; ampliar e retornar preservam o mesmo aplicativo.
+- **Internet:** o atalho abriu a loja publicada e `pesquisar Vereda Cerrado luminárias` abriu resultados reais do Google, em novas abas. A janela foi inspecionada em 1280×720 e 407×734; na abertura estreita, uma tecla 3D escreveu no campo de pesquisa. A validação rejeitou um endereço `javascript:` sem navegar. Nenhum erro de console foi registrado nessa verificação.
+- **Palavra:** 371 verificações de lógica passaram (letras repetidas, normalização, inválidas, vitória/derrota, restauração e escolha de outra resposta). Em navegador, `start termo` abriu o jogo; uma vitória em três tentativas e uma derrota na sexta foram concluídas. Palpite incompleto/inexistente não gastou tentativa. Clique nas letras seguido de Enter confirmou uma única vez; minimizar/reabrir e recarregar preservaram a partida. Tabuleiro, cores, teclado e legenda foram inspecionados em 1280×720 e 407×734.
+- **Nova entrada:** clique na tampa 3D, botão físico de energia, botão acessível e passagem Terminal → história foram conferidos. O comando `-- start vereda` e a opção visual iniciaram a apresentação. Testes de estados cobriram callbacks, movimento reduzido, links diretos e restauração do conteúdo.
+- **Assets:** cópias da marca conferidas por hash; GLBs lidos pelo GLTFLoader r128, com coordenadas, pivôs, UVs e materiais verificados.
+- **Áudio:** sintaxe e harness passaram para ativação explícita, bloqueio de autoplay, preferências separadas, mudo, volume zero, visibilidade, retorno rápido e limpeza de timers/vozes. A audição no navegador não é substituída por esse teste.
+- **Navegação:** a correção anterior de carregamento direto em `#luz` passou na regressão de inicialização, primeiro scroll e callback de resize. A regressão voltou a passar após a integração da nova entrada.
+- **Dimensões:** a narrativa base foi conferida em 1280×720, 1024×768, 1366×768, 1920×1080 e 390×844 sem overflow horizontal na checagem básica. A abertura e o desktop ampliado também foram inspecionados em 1280×800 e telas estreitas de 319/390 px; a projeção móvel durante a história foi desativada e o ambiente Luz conferido apagado/aceso.
+
+Esses resultados **não equivalem a uma auditoria completa de acessibilidade ou de todas as interações em cada tamanho**. Os caminhos principais foram conferidos; fullscreen, todas as combinações de paisagem baixa, foco, contraste e movimento reduzido do conjunto não receberam auditoria exaustiva. A publicação usa GitHub Pages; alterações locais só chegam ao site após push e conclusão do deploy.
+
+Correção de 26/09: janela estreita não remove o mouse, o teclado interativo ou o terminal durante a abertura; o enquadramento inclui notebook e mouse. A expansão automática por largura foi removida. Em 407×734, arrastar o mouse 3D moveu o cursor interno e clicar abriu Pega-luz; o enquadramento também foi medido com os extremos de inclinação em 319, 390 e 407 px.

@@ -1,0 +1,48 @@
+{
+  "checked": "2026-09-26",
+  "vector_available": false,
+  "note": "Nenhum SVG oficial encontrado nas pastas auditadas. PNGs oficiais copiados sem conversão ou redesenho.",
+  "font": {
+    "family": "Manrope",
+    "weight": "200 800",
+    "style": "normal",
+    "license": "SIL OFL 1.1"
+  },
+  "files": [
+    {
+      "file": "logo-negativo.png",
+      "source": "vereda/public/marca/logo-negativo.png",
+      "bytes": 49729,
+      "sha256": "0433718f204a8f561b093b3fa77adbb5f2d2a8ba2db658218b852d40bd4226e1",
+      "identical_to_source": true,
+      "width": 1345,
+      "height": 1082,
+      "aspect": 1.2430683918669132
+    },
+    {
+      "file": "simbolo-app.png",
+      "source": "vereda/src/app/icon.png",
+      "bytes": 15200,
+      "sha256": "68216c7e92b5669a84e5472d0353bfb7712bddd683bffc5b4d084aa9185a91e0",
+      "identical_to_source": true,
+      "width": 512,
+      "height": 512,
+      "aspect": 1.0
+    },
+    {
+      "file": "manrope-latin-vf.woff2",
+      "source": "vereda/src/fontes/manrope-latin-vf.woff2",
+      "bytes": 22692,
+      "sha256": "31c6db132921ad304ea93e776f1efae256cb4dcd9796c775be418d95d485b4a5",
+      "identical_to_source": true
+    },
+    {
+      "file": "OFL-Manrope.txt",
+      "source": "vereda/src/fontes/OFL.txt",
+      "bytes": 4384,
+      "sha256": "e01b637272e0cbdfb240184dd98ea5cc671556d9894dae2668d92ab2c906787c",
+      "identical_to_source": true
+    }
+  ],
+  "source_paths": "Caminhos relativos ao repositório original da marca Vereda."
+}

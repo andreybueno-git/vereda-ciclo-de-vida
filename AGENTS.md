@@ -1,258 +1,77 @@
-# AGENTS.md — vereda · ciclo de vida do serviço + SLM
+# Vereda — apresentação
 
-Passagem de bastão para quem continuar este projeto (Codex ou outro agente).
-Leia inteiro antes de mexer: quase toda regra aqui custou um bug medido.
+Esta pasta contém a versão atual **Da ideia à luz**, uma narrativa de 16 capítulos precedida por notebook fechado → abrir tampa → ligar → marca na tela → Terminal → jogo ou apresentação. `start vereda` conduz pela transição à história, ao fatiamento demonstrativo, à aprovação, à impressão dirigida pelo scroll e à luz final. Não restaurar a luminária de cogumelo/portal rejeitada, o preloader anterior de tela inteira ou a combinação antiga de fontes por conveniência.
 
-**No ar:** https://andreybueno-git.github.io/vereda-ciclo-de-vida/
-**Repo:** `andreybueno-git/vereda-ciclo-de-vida` (branch `main`, GitHub Pages publica a raiz)
-**Dono:** Andrey (aluno; fala português do Brasil, escreve rápido e com erro de digitação — entenda a intenção)
+## Fonte de verdade e conteúdo
 
----
+- Preservar `docs/respostas-slm.json` e `docs/folha-slm-respondida.html`. O JSON contém respostas finais e os dez problemas dos revisores.
+- `story-content.js` expõe `window.VEREDA_CONTENT`: 16 capítulos com síntese e `details` completos. Manter os botões de conteúdo completo e sua rolagem; não sacrificar informação acadêmica para caber na cena.
+- Preservar rastreamento `sourceKeys`/`data-source`, tabela de seis indicadores, dez etapas do fluxo e os qualificadores das metas.
+- Ordem SLM: SLR → conferir UC → acordar SLA → monitorar → revisar → SIP. Sem OLA porque há uma pessoa.
+- IA somente no Desenho da encomenda, sem dados pessoais. Andrey revisa o modelo; o cliente aprova a prévia. Não atribuir à IA impressão, precificação, atendimento ou operação.
+- Não converter metas internas em SLA. Não inventar resultados, números, ganhos medidos ou garantias de frete. Tempos/custos da cúpula original não descrevem a luminária demonstrativa.
+- Revisão, fatiamento e cotação sustentam a prévia; preço e data são informados antes de pagar. Fila + produção + frete compõem o prazo. Aprovação e pagamento precedem impressão.
 
-## 1. O que é
+## Arquitetura ativa
 
-Apresentação em HTML (um arquivo só, `index.html`) da disciplina **Gerenciamento de
-Serviços de TI**, aplicada à **vereda**: marca de luminárias e peças decorativas
-impressas em 3D, de Palmas-TO ("a luz do Cerrado dentro de casa").
+- `index.html`: capítulos, controles e integração dos módulos. Não carrega `boot.js`/`boot.css` nem markup do preloader antigo.
+- `atelier.css`/`atelier.js`: visual, navegação, conteúdo completo e ligação entre módulos.
+- `atelier-forms.js`: `VeredaForms.createLamp({color})`; grupo compartilhado por cena, desktop e estúdio. Manter a mesma forma e cor na trajetória.
+- `atelier-scene.js`: mundo Three, câmera, notebook/impressora, abertura articulada, camadas, projeção do desktop e inclinação suave pelo ponteiro. A resposta ao ponteiro respeita pausa e movimento reduzido; um ponteiro de mouse continua funcionando em painéis estreitos. Resize e homografia usam o retângulo real do canvas, incluindo deslocamentos.
+- `notebook-entry.js`/`.css`: `VeredaEntry.init({onReady,onPresent})`, `.open()`, `.power()`, `.present(callback?)`, `.skip()`, `.snapshot()`. Estados `closed → opening → off → booting → ready → transition → story`, com `vereda:entry` para progresso. Não abrir ou ligar automaticamente. `lidProgress`, `powerProgress` e `transitionProgress` dirigem a cena; movimento reduzido resolve fases sem animação. Hash direto diferente de `#hero` preserva o capítulo e dispensa a introdução.
+- `notebook-desktop.js`/`.css`: `VeredaDesktop`; nove aplicativos — Terminal, Internet, Projeto.stl, Fatiador, Acordo, Guia SLM, Luz, Pega-luz e Palavra. O terminal aceita `-- start vereda`/`start vereda` para iniciar a apresentação, `open projeto`, `open jogo`, `help` e comandos locais listados por `help`; não executa shell nem acessa o sistema. `expand()`/`collapse()` movem o MESMO `#notebook-ui` para/de um dialog nativo, mantendo aplicativo, estado e entrada; não substituir esse fluxo por outro editor.
+- `notebook-web.js`/`.css`: app Internet, montado por `VeredaWeb.create`. Loja em `https://veredacerrado.com/`, confirmada no checkout original e HTTP 200. A loja bloqueia iframe por DENY/frame-ancestors none; manter abertura real em nova aba com noopener/noreferrer. Busca usa Google, somente após ação; não fabricar resultados nem contornar headers. Terminal aceita `open internet`, `open loja`, `pesquisar termo`. Teclado 3D passa por `typeKey`. Não confundir a loja real com os pedidos simulados.
+- `notebook-words.js`/`.css`: app **Palavra**, jogo local de cinco letras e seis tentativas, com partidas livres. `VeredaWordGame.create(host)` retorna `typeKey`, `setVisible`, `focus` e `dispose`. Teclado nativo, clicável e 3D alimentam a mesma partida. Terminal aceita `start termo`, `start palavra`, `open termo` e `open palavra`; `start jogo` continua abrindo Pega-luz. Não substituir por link externo. Letras repetidas exigem contagem correta, palavra inválida não consome tentativa, e pistas precisam ter significado além da cor. Banco em `notebook-word-list.js`; fonte/licença em `docs/palavra-dicionario.md`.
+- `notebook-input.js`: `VeredaHardware.attach`; separa os keycaps reais do GLB em 73 teclas e liga mouse/trackpad ao cursor do desktop. Entrada passa por `VeredaDesktop.typeKey()`. Não tratar como teclado completo do sistema; preservar mapeamento, foco e separação dos gestos de navegação.
+- `notebook-stickers.js`: `VeredaStickers.apply`; cinco adesivos em CanvasTexture nas superfícies do notebook, sem downloads. Preservar posição local, marca oficial e limpeza de recursos.
+- `studio.js`/`.css`: `VeredaStudio.init({onChange,onSend})`, `.open(state)`, `.close()`, `.syncState(state)`; dialog ampliado e fallback textual. Desktop e estúdio sincronizam snapshots completos em ambos os sentidos. Manter identificação da superfície e unidade explícita de camadas, normalizar travas e evitar feedback entre callbacks.
+- `light-room.js`: `VeredaLightRoom.create(THREE)` retorna `group`, `setLight`, `dispose` e `info`. Cenário local do app Luz, sem substituir a factory da luminária. As dimensões da cena são unidades artísticas, não especificação de produto.
+- `atelier-audio.js`/`.css`: `VeredaAudio.play(kind)`, `.setMusic()`, `.setKeys()`, `.setVolume()`, `.setMuted()`, `.dispose()`. Síntese instrumental original e sons `key`, `enter`, `open`, `success`, `game`; escuta `vereda:key`/`vereda:interaction`. Somente um clique real no botão Música libera o AudioContext; eventos e chamadas de API não autorizam áudio antes disso.
+- Dependências de execução em `assets/vendor/`: Three **r128** e GLTFLoader compatível. Não misturar revisões ou introduzir CDN.
+- Modelos em `assets/atelier/`; documentação de pivôs, nomes e hashes em `README.md`, `manifest.json` e `validacao.json` dessa pasta.
 
-Junta **duas atividades da disciplina** numa apresentação só:
+`boot.js`/`boot.css`, `surreal.*`, `fonts.css`, `notes.js`, `higgsfield-scene.js`, bibliotecas Three antigas na raiz e `assets/higgsfield/` são históricos, quando presentes na pasta de trabalho. O index atual não os carrega e o ZIP de entrega não os inclui. Não restaurar essas dependências, usá-las como arquitetura ativa ou adicioná-las ao pacote por cópia indiscriminada.
 
-| Folha | Conteúdo | Onde está no deck |
-|---|---|---|
-| **12/09/2026** · Planejamento estratégico e ciclo de vida do serviço (escrita à mão pelo aluno) | 5 etapas do ciclo; "Novo Serviço" com PROCESSO 1–5 (Estratégia de TI, Portfólio, Demanda, Financeiro, Relacionamento com o Negócio); Decisão estratégica sobre IA (1 aplicação, 2 benefício, 3 viabilidade, 4 risco, 5 decisão) | capa, 01–05, 06 |
-| **19/09/2026** · Desenho do Serviço: Gerenciamento do Nível de Serviço (SLM) | itens 1 escopo, 2 requisitos, 3 processos, 4 tecnologia, 5 métricas e KPIs, 6 uso de IA, 7 fornecedores, 8 fluxo | 02·1 a 02·5 (dentro do Desenho: SLM é processo do Desenho no ITIL v3) |
-| **19/09/2026** · Segurança, continuidade e qualidade do uso de IA | a) risco, b) proteção e supervisão, c) continuidade, d) qualidade — "retomem a IA do item 6" | 06·1 e 06·2 |
+## Marca e desenho
 
-As respostas da folha de SLM estão em **`docs/respostas-slm.json`** (fonte dos slides) e
-a versão para imprimir/copiar à mão em **`docs/folha-slm-respondida.html`**.
+- Fonte oficial atual: **Manrope variável 200–800**, hospedada em `assets/brand/manrope-latin-vf.woff2`. Manter a licença `OFL-Manrope.txt` junto.
+- Usar `assets/brand/logo-negativo.png` ou `simbolo-app.png`, sem inventar um símbolo substituto como `✳`. O logo disponível é o PNG oficial, não um vetor redesenhado. Preservar proporção; filtro CSS para contraste no fundo claro é parte da versão atual.
+- Base clara/névoa, terracota `#b4552d`, musgo `#5a6b4f`, areia `#e5d9c4`; luz quente e superfície noturna quando a narrativa pedir. Proveniência em `assets/brand/proveniencia.json`.
+- Cada movimento deve servir ao conteúdo: câmera orienta atenção; fatiamento revela camadas; aprovação permite envio; impressão forma a peça; luz revela seu uso.
+- Textos de produto devem explicar ações e estado, sem expor implementação, contadores de módulos ou jargão de renderização ao visitante.
 
-**Estilo:** BRUTALISMO. Tipografia Fraunces enorme em caixa-alta, campos de cor com
-**parada dura** (verde e barro cortam em 58 % da largura, branco em 62 %), sombra
-offset sem desfoque, zero raio. **Um objeto 3D (three.js) atravessa o deck e MORFA**
-entre as etapas (nuvem de pontos → fatias → primeira camada → peça acesa → estilhaça e
-remonta outra peça). No fim entra o vídeo da luminária real acendendo.
+## Simulação e limites
 
----
+- Notebook, STL demonstrativo, fatiamento, aprovação, pagamento e envio à Bambu são **simulação local**. Não conectar APIs de cobrança, pedidos, dados pessoais, hardware ou envio externo nesta apresentação.
+- A inicialização e a aproximação da câmera são sequências cênicas. Não descrever seus tempos ou barras como progresso real de assets, processamento de STL, fatiamento ou comunicação com uma Bambu.
+- Manter a indicação discreta de simulação e as travas de ordem. Mudanças que invalidam revisão/acordo devem limpar as confirmações correspondentes.
+- Não usar 11h41, três dias úteis ou custo da folha como estimativa do modelo da cena. Não apresentar proporções ou animações como validação de impressão física.
+- O notebook e a impressora são GLBs reais gerados no Higgsfield. A impressora é uma representação autoral baseada na P2S + AMS 2 Pro, não CAD de fabricação.
+- Projeto ativo: `36a75bfe-6671-48b3-8fa1-da06ea76be27`, revisão 2 no manifesto. Consultar o estado do projeto antes de futuras edições. Preservar grupos, pivôs e UVs necessários ao renderer.
 
-## 2. Os 16 blocos
+## Robustez e acessibilidade
 
-Cada `<section class="bloco ...">` tem `data-titulo`, `data-objeto` (texto do rodapé) e
-`data-estado` (estado do morph, 0 a 4). O rodapé e o objeto leem desses atributos:
-**não existe lista paralela** — para inserir slide, só inserir a section.
+- A entrada mantém um caminho direto para a apresentação. Ocultar e tornar inerte o conteúdo narrativo somente durante a introdução; restaurar scroll, foco e controles ao entrar em `story`. Uma falha de recursos não pode prender o visitante na tampa ou na tela de inicialização.
+- Durante a história, até 760 px, a projeção HTML fica desativada para não cobrir o texto. Durante a abertura em estado ready, manter desktop projetado, mouse e teclado funcionais independentemente da largura; Ampliar é uma opção. Nunca esconder o mouse nem expandir automaticamente apenas porque a janela estreitou. Preservar o breakpoint único `<=760` e `transform:none` do desktop no dialog. Não permitir uma miniatura fixa com z-index alto sobre o texto que rola.
+- Sem WebGL/GLB, disponibilizar a história e controles textuais. Nunca manter um overlay bloqueando indefinidamente.
+- Pausa e `prefers-reduced-motion` mantêm texto integral, navegação e ações funcionais; não congelar títulos parcialmente mascarados. Não introduzir orbit automático no desktop ou estúdio.
+- Música começa desligada, usa volume baixo e tem controles separados de teclas, volume e mudo. Ocultar a aba, silenciar, zerar o volume ou descartar o módulo precisa cancelar agendamentos/vozes e suspender/fechar o contexto conforme o caso. Não adicionar autoplay, rede, amostras ou músicas externas.
+- Terminal, jogo e hardware operam somente no desktop local. Pausar/cancelar timers e animações ao ocultar a superfície, minimizar/fechar ou mudar de capítulo. O Pega-luz deve continuar jogável por teclas e botões; não depender apenas de arrasto.
+- Dialogs precisam de foco previsível, Esc e retorno ao acionador. Inputs, slider, canvas e janelas não podem disparar atalhos da apresentação.
+- Resize/fullscreen preservam o capítulo e reconciliam posição, estado e câmera; retorno do scroll deve ser determinístico.
+- A narrativa base passou na checagem básica em 1280×720, 1024×768, 1366×768, 1920×1080 e 390×844 sem overflow horizontal. A entrada e o dialog também foram inspecionados em 1280×800 e telas estreitas de 319/390 px; isso não certifica todas as interações, contraste, foco ou acessibilidade. Conferir também paisagem baixa e conteúdo contra rodapé/controles, não apenas `scrollHeight`.
+- Validar o fluxo completo, modelo/cor compartilhados, falha de assets, teclado, foco, contraste e movimento reduzido. Testes de módulos isolados não substituem essa revisão.
 
-| # | data-titulo | fundo | estado | origem |
-|---|---|---|---|---|
-| 0 | Abertura (hero) | `bloco--hero` | 0 | nova (25/09) |
-| 1 | Capa | vazado | 0 | folha 12/09 |
-| 2 | Estratégia (os 5 processos) | vazado | 0.45 | folha 12/09 |
-| 3 | Desenho | verde | 1.2 | folha 12/09 |
-| 4 | Escopo e requisitos (02·1) | branco | 1.3 | SLM itens 1–2 |
-| 5 | Processo SLM (02·2) | vazado | 1.4 | SLM item 3 |
-| 6 | Métricas e KPIs (02·3) | branco | 1.55 | SLM item 5 |
-| 7 | Tecnologia e fornecedores (02·4) | verde | 1.65 | SLM itens 4 e 7 |
-| 8 | Fluxo do desenho (02·5) | branco | 1.8 | SLM item 8 |
-| 9 | Transição | vazado | 2.15 | folha 12/09 |
-| 10 | Operação | barro | 3.15 | folha 12/09 |
-| 11 | Melhoria | vazado | 3.9 | folha 12/09 |
-| 12 | IA (decisão 1–5) | branco | 4 | folha 12/09 |
-| 13 | IA: risco e proteção (06·1) | barro | 4 | SLM item 6 + a + b |
-| 14 | IA: continuidade e qualidade (06·2) | verde | 4 | SLM c + d |
-| 15 | Fim (vídeo da peça acendendo) | vazado | 4 | — |
+## Rodar e registrar
 
----
+Repositório: `andreybueno-git/vereda-ciclo-de-vida`. GitHub Pages: https://andreybueno-git.github.io/vereda-ciclo-de-vida/, origem `main:/`. Só publicar quando solicitado. Commits em português, sem `Co-Authored-By`; confirmar a conta `andreybueno-git`, o commit remoto e o deploy. Preservar o histórico da edição anterior.
 
-## 3. Arquivos
+Dentro desta pasta:
 
-| Arquivo | O que é |
-|---|---|
-| `index.html` | O deck inteiro: CSS, HTML e o script principal. Fontes embutidas em base64 (~150 KB). |
-| `objeto.js` | O objeto 3D que morfa (`window.iniciarObjeto`). |
-| `luz.js` | O hero: simulação de fluido que acende a luminária (`window.iniciarLuz`). |
-| `three.min.js` | three.js LOCAL. Não trocar por CDN. |
-| `assets/peca-acende.mp4`, `peca-poster.jpg` | Vídeo do bloco final (render do Blender). |
-| `assets/hero/apagada.jpg`, `acesa.jpg` | Os dois quadros do hero, mesma câmera, 1920×1080. (Os `.png` brutos estão no `.gitignore`.) |
-| `render_acende.py` | Blender: renderiza o vídeo da peça acendendo. |
-| `render_hero.py` | Blender: renderiza os dois quadros do hero. `Blender -b -P render_hero.py` |
-| `docs/respostas-slm.json` | Respostas da folha de SLM + os 10 problemas que os céticos apontaram. |
-| `docs/folha-slm-respondida.html` | Folha respondida para imprimir (A4). PDF: abrir no Chrome e imprimir, ou `Chrome --headless=new --print-to-pdf=saida.pdf docs/folha-slm-respondida.html`. |
-| `README.md` | Documentação para humanos. Mantenha em dia junto com este arquivo. |
-
----
-
-## 4. Rodar e publicar
-
-```bash
-python3 -m http.server 8811 --directory ~/Documents/Projetos/vereda-itil
-# abrir http://localhost:8811
+```sh
+python3 -m http.server 8842 --bind 127.0.0.1
 ```
 
-Precisa de HTTP (WebGL e vídeo não rodam em `file://` direito).
+Abrir `http://127.0.0.1:8842/`; alternativa no Mac: `Abrir apresentacao.command`, que escolhe uma porta livre. Manter tudo em HTTP local.
 
-**Publicar = push na `main`.** O GitHub Pages leva ~40 s:
-
-```bash
-git push origin main
-gh run list --limit 1          # esperar "completed success"
-```
-
-Se o `push` cair com "remote end hung up", é a rede: repita. Se um `git` travar e deixar
-`.git/index.lock`, confira que nenhum git está rodando nessa pasta e só então apague.
-
-**Navegar no deck:** setas / PageUp / PageDown / espaço / Enter / Backspace, `Home`, `End`.
-`F` = tela cheia. `L` = acende a peça na abertura.
-
----
-
-## 5. Regras do dono (não negociáveis)
-
-1. **Commits sem `Co-Authored-By`** — é trabalho de faculdade; o dono pediu. Mensagem em
-   português, explicando o PORQUÊ e o que foi MEDIDO (veja `git log`).
-2. **Não mencione Prolog** para o dono. O projeto não tem nada a ver com o trabalho de
-   Prolog dele; a simulação de fluido foi reaproveitada como técnica, mas ele não quer
-   essa associação.
-3. **Não invente número.** Todo número da vereda sai da ficha da seção 9 ou é meta
-   proposta com a conta à mostra.
-4. **O conteúdo das folhas é do aluno.** Pode enxugar para caber no slide; não mude o
-   sentido. Se achar erro de ITIL, aponte e pergunte antes de reescrever.
-5. **Nada de CDN.** Fontes em base64 e three.js local: a sala pode não ter internet.
-6. **Sempre verificar no navegador medindo** (seção 7) antes de dizer que está pronto.
-   "Renderizou" não é prova.
-
----
-
-## 6. Decisões de desenho que parecem arbitrárias mas não são
-
-**Marca.** Barro `#B4633C`, Areia `#E8DCC8`, Branco quente `#F7F2E9`, Verde Vereda
-`#3F5B48`, Carvão `#2A2521`, Dourado `#D8A34A`. Neutros dominam, verde é acento,
-**dourado só na peça acesa**. O Barro puro dá 3,93:1 sobre o creme e REPROVA para texto
-pequeno: em texto use `--barro-campo` `#8C4A28` (6,03:1).
-
-**Campo de cor.** O texto e as caixas NUNCA atravessam a parada de cor (58 % / 62 %): do
-outro lado mora o objeto 3D. Largura é amarrada em **% do `.dentro`** (ex.: `.slm > .folha
-{ max-width: 59% }` no branco, `55%` no verde/barro), testado de 1024 a 1920.
-
-**Rodapé fixo** (`#estado`, "bloco N / 15 · objeto: …") ocupa o pé da tela. Conteúdo não
-pode ficar embaixo dele. O bloco tem `padding-bottom` para isso, mas conteúdo demais
-ainda invade — ver seção 7.
-
-**Tipografia (Fraunces + Work Sans, subset LATIN, variáveis 300–700):**
-- As fontes embutidas eram o subset **VIETNAMITA** (o primeiro `@font-face` da resposta do
-  Google Fonts; o latin é o ÚLTIMO). Tinha só A, Á, Ã: o resto caía em Georgia. Se
-  reembutir fonte, confira medindo largura de glifo contra o fallback —
-  `document.fonts.check` mente.
-- `letter-spacing: 0` nos h1/h2 (medido em canvas: -0.045em dava 12 pares de letras com
-  tinta sobreposta; a Fraunces opsz 144 já vem apertada). `word-spacing: 0.1em`.
-- `font-optical-sizing: auto` declarado (o opsz padrão do arquivo é 9, o de texto).
-
-**Revelação letra a letra** (`mascarar()` / `revelarLetras()`): cada letra num
-`<span class="mask"><span class="mask__i">`. Tem de ser **span, nunca `<i>`** — `<i>` é
-itálico no navegador e, sem Fraunces itálica, vira oblíquo SINTÉTICO (entortava o N e
-o Q). `font-style: normal` na regra por garantia. Janela de recorte
-`padding: .16em .06em .17em` com margem negativa igual (a cedilha de PEÇA desce 0,199em);
-`translateY(140%)` acompanha essa janela.
-
-**Objeto 3D** (`objeto.js`): o morph usa amortecimento 0.10 como ÚNICA curva; giro em
-loop sem easing. O "fantasma" do estilhaço é uma janela que abre (3.3–3.7) e fecha
-(3.85–4.0) junto com a geometria.
-
-**Hero** (`luz.js`, bloco 0): luminária apagada; o ponteiro injeta luz num fluido
-(Stable Fluids: splat → advecção → divergência → pressão Jacobi 20× → gradiente →
-advecção da luz → revelação) que troca o quadro apagado pelo aceso. Medidor
-**medido × meta 80 %** conta só células da grade 96×54 onde a peça existe (máscara lida
-da imagem acesa); o trajeto do ponteiro é interpolado. Na meta, a peça acende inteira
-(`uTudo`) e fica. Parâmetros de fluido medidos: `suavidadeBorda 0.035`,
-`larguraBorda 0.30`, `tamanhoRevelacao 5.4`, dt real com teto 1/30 s, dissipação por
-segundo. Sem WebGL: `.sem-luz` mostra a imagem acesa em CSS.
-
-**Preload** (`#pre`): a peça "imprimindo" de baixo para cima enquanto carregam fontes,
-objeto 3D, vídeo e as imagens do hero. Trava de 6,5 s; também sai por CSS aos 9 s se o JS
-morrer. A entrada do primeiro slide fica NA FILA (`animarBloco` / `soltarFila`) até a tela
-sair.
-
-**Navegação:** a tecla mede onde a tela está (`indiceVisivel()`), nunca pergunta a uma
-variável. `scrollTo` no contêiner `#deck` (não `scrollIntoView`), snap solto durante a
-viagem e devolvido no `scrollend`. `e.repeat` ignorado. Guarda do IntersectionObserver
-é `intersectionRatio < 0.5` (com `isIntersecting` o bloco que sai ficava com a última
-palavra e o vídeo do fim tocava por cima do slide anterior).
-
----
-
-## 7. Como verificar (cole no console da página)
-
-**A aba do navegador precisa estar VISÍVEL.** Em aba de fundo, rAF, IntersectionObserver
-e transições CSS congelam e todo teste dá falso negativo.
-
-**Layout** — rode em 1024×768, 1280×720, 1366×768 e 1920×1080. Os três números têm de
-ser zero/vazios:
-
-```js
-(async () => {
-  await document.fonts.ready;
-  const b = [...document.querySelectorAll('.bloco')], d = document.getElementById('deck');
-  document.querySelectorAll('.surge').forEach(e => e.classList.add('ativo'));
-  document.querySelectorAll('h1,h2,.eyebrow .num').forEach(e => e.classList.add('revelou'));
-  const alto = [], rodape = [], fora = [];
-  for (let i = 0; i < b.length; i++) {
-    d.scrollTo({ top: b[i].offsetTop, behavior: 'instant' });
-    // 250 ms: com menos, a rolagem ainda não assentou e o teste acusa invasão falsa
-    await new Promise(r => setTimeout(r, 250));
-    // o bloco CRESCE com o conteúdo: medir contra a tela, não scrollHeight do bloco
-    if (b[i].offsetHeight > innerHeight + 2) alto.push(i);
-    const topo = document.getElementById('estado').getBoundingClientRect().top;
-    let fundo = 0;
-    b[i].querySelectorAll('.dentro *').forEach(e => { const r = e.getBoundingClientRect(); if (r.height) fundo = Math.max(fundo, r.bottom); });
-    // folga mínima de 8 px: a sombra das caixas (4-6 px) não entra no getBoundingClientRect
-    if (fundo > topo - 8) rodape.push([i, Math.round(fundo - topo)]);
-    const campo = b[i].classList.contains('bloco--branco') ? .62 : (/bloco--(verde|barro)/.test(b[i].className) ? .58 : null);
-    if (campo) b[i].querySelectorAll('.caixa,.kpis,.fluxo,h2,p,li,td').forEach(e => {
-      if (e.getBoundingClientRect().right > b[i].clientWidth * campo + 2) fora.push(i);
-    });
-  }
-  console.log({ maisAltoQueATela: alto, embaixoDoRodape: rodape, foraDoCampo: [...new Set(fora)] });
-})();
-```
-
-**Extensão de texto** se mede com `Range` sobre os NÓS DE TEXTO. `getBoundingClientRect`
-de parágrafo devolve a largura do contêiner, não das letras.
-
-**Hero:** `__luz.diagnostico()` → `{carregadas: 2, totalPeca: 553, medido, cumprido}`.
-Prova de que desenha: `__luz.renderizarAgora(60)` → `acesos` > 0 (pixels lidos da GPU).
-Gesto simulado: `__luz.passarMao([[x, y], ...])` em coordenadas de tela.
-
-**Objeto 3D:** `__objeto.avancar(80)` roda quadros na hora; `__objeto.amostrar()` lê pixels.
-
-**Navegação:** `__nav.onde()` devolve o bloco visível; `__nav.ir(i)`.
-
----
-
-## 8. Pendências e ideias (nada disso foi pedido ainda)
-
-- O kerning some com a máscara letra a letra (~8 px na capa, quase todo em `F|A`). Só
-  volta mascarando por LINHA — é refatoração.
-- As fontes pesam ~118 KB; dá para instanciar a Fraunces em `wght 400..700`.
-- O `∞` do bloco final cai no Georgia de propósito (não existe no subset latin).
-- A frequência "mensal" da revisão de SLM e a "linha de base do primeiro mês" são
-  decisões do plano, não dados medidos (os céticos marcaram, está declarado no texto).
-
----
-
-## 9. Ficha de fatos da vereda (única fonte de números)
-
-- Dono sozinho, pessoa física (CPF). Palmas-TO. Instagram `@vereda.cerrado`; site
-  `veredacerrado.com` (Netlify + Supabase + Resend).
-- Portfólio: luminárias (a "Vereda", cogumelo E14), vasos, enfeites, lembranças; cor,
-  tamanho e nome personalizáveis; "cinco modelos e o que o cliente inventar".
-- Máquina: Bambu Lab P2S + AMS 2 Pro. Fatiador Bambu Studio. Modelagem Blender.
-  PLA Matte (R$ 80/kg); PETG em peça técnica.
-- Custos da calculadora: margem 120 %, P2S 150 W, energia R$ 0,95/kWh, desgaste R$ 1,20/h.
-- Cúpula medida: 179,59 g e **11 h 41 min** de impressão; custo **R$ 30,05**; preço
-  R$ 66 (R$ 70 com a taxa do Mercado Pago de **4,99 %**; R$ 119 com acabamento e
-  embalagem).
-- Falha de impressão de iniciante: 15 a 25 % (pesquisa do dono).
-- Pagamento: Mercado Pago Checkout Pro (Pix e cartão). Frete: Melhor Envio (Brasil) +
-  Palmas com retirada ou motoboy.
-- Lei: Decreto 7.962/2013 (prazo de entrega informado; resposta a reclamação em até
-  **5 dias**); CDC art. 49 (arrependimento em **7 dias**).
-- Decisão de IA já apresentada: **adotar limitada**, só no Desenho, para ideias e prévia;
-  cada modelo revisado e aprovado por uma pessoa antes da máquina; fora da Transição e da
-  Operação.
+A versão possui registros de checagem de conteúdo, estados do estúdio, fluxo do desktop, áudio opt-in, regressão do hash `#luz` e parsing dos GLBs. Os testes do preloader antigo não cobrem `notebook-entry`. Há evidência dos caminhos principais da entrada (tampa, energia física e botão acessível, comando e opção visual), Pega-luz, hardware e ambiente Luz. Alterações futuras exigem revalidar os caminhos afetados. O README distingue cada resultado da revisão completa de acessibilidade ainda não realizada. Atualizar documentação quando arquitetura, contratos ou estado de validação mudarem. Empacotar somente arquivos ativos e suas dependências. Não publicar automaticamente: esta pasta é uma entrega local.

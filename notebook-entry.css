@@ -1,0 +1,58 @@
+/* The existing header keeps the official Vereda logo and motion/audio controls. */
+html[data-entry]:not([data-entry="story"]),html[data-entry]:not([data-entry="story"]) body{overflow:hidden!important;overscroll-behavior:none}
+html[data-entry]:not([data-entry="story"]) :is(#story,.site-foot,.stage-caption,.scene-controls,.scene-hint,.mobile-studio-launch){visibility:hidden!important;pointer-events:none!important}
+html[data-entry]:not([data-entry="story"]) .site-head :is([data-index],#fullscreen){visibility:hidden!important;pointer-events:none!important}
+html[data-entry]:not([data-entry="story"]) .head-note{visibility:hidden}
+html[data-entry]:not([data-entry="story"]) .stage{inset:0;height:100dvh;bottom:0}
+html[data-entry]:not([data-entry="story"]) .site-head{background:linear-gradient(#f1f0ec,transparent)}
+#notebook-entry{position:fixed;inset:0;z-index:7;pointer-events:none;color:#30372e;font-family:Manrope,Arial,sans-serif;isolation:isolate}
+#notebook-entry[hidden]{display:none!important}
+#notebook-entry *{box-sizing:border-box}
+#notebook-entry .ve-entry-intro{position:absolute;top:110px;left:24px;right:24px;text-align:center;transition:opacity .3s ease,transform .5s ease}
+#notebook-entry .ve-entry-intro>p{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#847c6f;margin:0 0 12px}
+#notebook-entry h1{font-size:clamp(22px,2.5vw,36px);font-weight:450;line-height:1.2;letter-spacing:-.04em;margin:0;text-wrap:balance}
+#notebook-entry .ve-entry-controls{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;width:min(470px,calc(100vw - 40px));text-align:center;pointer-events:auto}
+#notebook-entry .ve-entry-step{font-size:10px;font-weight:550;line-height:1.4;letter-spacing:.07em;text-transform:uppercase;color:#8a7c68;margin:0 0 11px}
+#notebook-entry button{font-family:inherit;cursor:pointer;letter-spacing:0}
+#notebook-entry button:focus-visible{outline:3px solid #ad7551;outline-offset:4px}
+#notebook-entry .ve-entry-action{display:inline-flex;align-items:center;justify-content:center;gap:28px;min-width:235px;min-height:51px;padding:13px 23px;border:1px solid #a35130;border-radius:5px;background:#a35130;color:#fffaf1;font-size:14px;font-weight:600;box-shadow:0 8px 23px #56342012;transition:background .2s,transform .2s}
+#notebook-entry .ve-entry-action:hover:not(:disabled){background:#884329;transform:translateY(-2px)}
+#notebook-entry .ve-entry-action:disabled{cursor:default;opacity:.58}
+#notebook-entry .ve-entry-action svg{width:22px;height:22px;flex:none}
+#notebook-entry [data-entry-status]{font-size:11px;line-height:1.55;color:#7a786c;margin:11px 0 6px;min-height:17px;max-width:40ch;text-wrap:pretty}
+#notebook-entry .ve-entry-skip{border:0;background:transparent;padding:7px 10px;font-size:10px;color:#898274;text-decoration:underline;text-underline-offset:4px;line-height:1.4}
+#notebook-entry .ve-entry-skip:hover{color:#985136}
+#notebook-entry .ve-entry-skip:disabled{opacity:.4;cursor:default}
+#notebook-entry:not([data-phase="closed"]) .ve-entry-intro{opacity:0;transform:translateY(-8px)}
+#notebook-entry[data-phase="transition"] :is(.ve-entry-intro,.ve-entry-controls){opacity:0;pointer-events:none}
+#notebook-entry .ve-entry-wash{position:absolute;inset:-30%;z-index:3;pointer-events:none;opacity:0;background:radial-gradient(ellipse at 62% 52%,#ffefd7 5%,#f6f2e8 42%,transparent 72%);transform:scale(.6);border-radius:46%}
+#notebook-entry[data-phase="transition"] .ve-entry-wash{animation:ve-entry-light 900ms cubic-bezier(.25,.7,.15,1) both}
+@keyframes ve-entry-light{0%{opacity:0;transform:scale(.6) rotate(-5deg)}55%{opacity:.87;transform:scale(1.1) rotate(0)}100%{opacity:1;transform:scale(2) rotate(5deg)}}
+@media(max-width:760px){
+  #notebook-entry .ve-entry-intro{top:139px;left:20px;right:20px}
+  #notebook-entry .ve-entry-intro>p{font-size:9px;margin-bottom:10px}
+  #notebook-entry h1{font-size:25px;max-width:19ch;margin-inline:auto}
+  #notebook-entry .ve-entry-controls{bottom:max(22px,env(safe-area-inset-bottom));width:calc(100vw - 34px)}
+  #notebook-entry .ve-entry-action{font-size:15px;min-height:52px;min-width:245px}
+  #notebook-entry [data-entry-status]{font-size:12px;max-width:33ch}
+  #notebook-entry .ve-entry-skip{font-size:11px;padding:9px 10px}
+  html[data-entry]:not([data-entry="story"]) .site-head :is([data-index],#fullscreen){display:none!important}
+}
+@media(max-height:630px) and (min-width:761px){
+  #notebook-entry .ve-entry-intro{top:83px}
+  #notebook-entry .ve-entry-intro>p{display:none}
+  #notebook-entry h1{font-size:25px}
+  #notebook-entry .ve-entry-controls{bottom:12px}
+  #notebook-entry .ve-entry-step{display:none}
+  #notebook-entry .ve-entry-action{min-height:43px;padding:10px 21px}
+}
+@media(prefers-reduced-motion:reduce){
+  #notebook-entry *,#notebook-entry *::before,#notebook-entry *::after{animation:none!important;transition:none!important}
+}
+@media print{
+  #notebook-entry{display:none!important}
+  html[data-entry]:not([data-entry="story"]) #story{visibility:visible!important}
+  html[data-entry],html[data-entry] body{overflow:visible!important}
+}
+
+body.ve-story-arrival:after{content:"";position:fixed;inset:0;background:#f1f0ec;z-index:45;pointer-events:none;animation:ve-story-reveal 650ms ease-out both}@keyframes ve-story-reveal{from{opacity:1}to{opacity:0}}

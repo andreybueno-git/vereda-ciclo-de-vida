@@ -1,0 +1,145 @@
+{
+  "projectId": "36a75bfe-6671-48b3-8fa1-da06ea76be27",
+  "projectUrl": "https://higgsfield.ai/3d-jutsu/36a75bfe-6671-48b3-8fa1-da06ea76be27",
+  "revision": 2,
+  "source": "Higgsfield 3D Jutsu / Blender 5.2",
+  "assets": [
+    {
+      "file": "atelier.glb",
+      "bytes": 1320348,
+      "nodes": 101,
+      "meshes": 87,
+      "triangles": 66888,
+      "sha256": "5ac78ed3f8bbd97505b73e05818261b31d244fb4111b5e9a7bb036480f16c182",
+      "roots": [
+        "Notebook",
+        "Printer_P2S"
+      ],
+      "centered": false
+    },
+    {
+      "file": "notebook.glb",
+      "bytes": 406480,
+      "nodes": 20,
+      "meshes": 18,
+      "triangles": 19310,
+      "sha256": "7c92d1d4c612d890d8034fa9ef013feee2881b7daaf3fe58a0a331d64e92b7ab",
+      "roots": [
+        "Notebook"
+      ],
+      "centered": true
+    },
+    {
+      "file": "printer.glb",
+      "bytes": 925296,
+      "nodes": 81,
+      "meshes": 69,
+      "triangles": 47578,
+      "sha256": "2efee210b8297d0ef66a162c3dd86566a97f548aa42ad4b38349812a679a598d",
+      "roots": [
+        "Printer_P2S"
+      ],
+      "centered": true
+    }
+  ],
+  "coordinateSystem": {
+    "units": "m",
+    "up": "+Y",
+    "front": "+Z",
+    "floor": 0
+  },
+  "hinges": {
+    "Notebook_Lid": {
+      "position": [
+        0,
+        0.025,
+        -0.099
+      ],
+      "restRotationX": -0.20943951,
+      "closedRotationX": 1.57079633
+    },
+    "Printer_Door": {
+      "position": [
+        -0.16,
+        0.235,
+        0.211
+      ],
+      "restRotationY": 0,
+      "openRotationY": -1.919862
+    },
+    "AMS_Lid": {
+      "positionRelativeToAMS": [
+        0,
+        0.089,
+        -0.135
+      ],
+      "openRotationX": -1.25
+    }
+  },
+  "print": {
+    "bedGroup": "Printer_Bed",
+    "bedRestPosition": [
+      0,
+      0.122,
+      0
+    ],
+    "bedSurfaceY": 0.133,
+    "bedUsableSize": [
+      0.256,
+      0.256
+    ],
+    "gantryGroup": "Printer_Gantry",
+    "gantryRestPosition": [
+      0,
+      0.389,
+      0
+    ],
+    "nozzleGroup": "Printer_Nozzle",
+    "nozzleRestPositionRelativeToGantry": [
+      0,
+      -0.014,
+      0.031
+    ],
+    "nozzleTipRelativeY": -0.05,
+    "nozzleTipRestY": 0.325
+  },
+  "screen": {
+    "node": "Notebook_Screen",
+    "material": "Notebook_Display",
+    "size": [
+      0.311,
+      0.194
+    ],
+    "positionRelativeToLid": [
+      0,
+      0.115,
+      0.0041
+    ],
+    "uv": "0..1",
+    "planar": true
+  },
+  "previews": [
+    {
+      "file": "atelier-preview.png",
+      "operationId": "atelier-preview-v2",
+      "artifactId": "17c50a378b2b2114b808a41bc4faa121",
+      "width": 900,
+      "height": 630
+    },
+    {
+      "file": "printer-interior.png",
+      "operationId": "atelier-interior-verification-v2",
+      "artifactId": "4419cb89286fdab9941bdc0e20f5eec8",
+      "width": 600,
+      "height": 650,
+      "note": "Temporary inspection pose; committed GLBs remain with door closed."
+    }
+  ],
+  "validation": {
+    "loader": "Three.js r128 GLTFLoader included in presentation",
+    "result": "passed",
+    "externalURIs": 0,
+    "requiredExtensions": [],
+    "visualInspection": "Full composition and printer interior render inspected"
+  }
+}
