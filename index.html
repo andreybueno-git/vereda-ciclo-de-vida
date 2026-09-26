@@ -134,6 +134,58 @@ body {
 .bloco--branco { background: linear-gradient(to right, var(--branco) 0 62%, transparent 62%); color: var(--carvao); }
 .bloco--vazado { background: transparent; }
 
+/* ================= O HERO =================
+   A luminária apagada ocupa a tela; a mão acende. O fundo é o preto do
+   próprio render (12, 11, 10), para a borda do quadro não aparecer em
+   tela mais larga que 16:9. */
+.bloco--hero { background: #0c0b0a; overflow: hidden; }
+#luz { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; display: block; }
+.bloco--hero .dentro { position: relative; z-index: 1; pointer-events: none; }
+.bloco--hero .dentro button { pointer-events: auto; }
+/* Sem WebGL, ou com movimento reduzido: a peça já aparece acesa, e o
+   medidor não finge medir o que não mediu. */
+.bloco--hero.sem-luz { background: #0c0b0a url("assets/hero/acesa.jpg") center / cover no-repeat; }
+.bloco--hero.sem-luz #luz, .bloco--hero.sem-luz .medidor, .bloco--hero.sem-luz .hero__dica { display: none; }
+
+.hero { max-width: min(1320px, 100%); }
+/* O título mora à esquerda da peça: a luminária começa em 53,7 % do
+   quadro (medido no render). Com o tamanho --enorme dos outros títulos,
+   "UMA PROMESSA" passava por cima dela. */
+.hero__titulo { font-size: clamp(2.4rem, 6.6vw, 7rem); max-width: 9ch; }
+.hero__apoio { max-width: 30ch; margin-top: var(--e2); }
+
+/* O medidor: medido contra meta. Uma régua fina, um marcador duro na
+   meta, e o número. Nada de painel: é o SLM inteiro numa linha. */
+.medidor { margin-top: clamp(1.4rem, 4vh, 2.6rem); width: min(26rem, 42vw); }
+.medidor__barra { position: relative; height: 6px; background: rgba(247, 242, 233, 0.16); }
+.medidor__cheio {
+  position: absolute; inset: 0 auto 0 0; width: 0%;
+  background: var(--branco); transition: width 0.35s cubic-bezier(0.25, 1, 0.5, 1), background 0.6s ease;
+}
+.medidor__meta { position: absolute; top: -6px; bottom: -6px; left: 80%; width: 2px; background: var(--ouro); }
+.medidor__rot {
+  margin: 0.7rem 0 0; display: flex; gap: 1.2rem; align-items: baseline;
+  font-size: var(--t-micro); font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
+}
+.medidor__rot b { font-variant-numeric: tabular-nums; }
+.medidor__ok { color: var(--ouro); opacity: 0; transition: opacity 0.6s ease; }
+.hero--cumprido .medidor__cheio { background: var(--ouro); }
+.hero--cumprido .medidor__ok { opacity: 1; }
+
+.hero__dica {
+  margin-top: 1.1rem; font-size: var(--t-micro); letter-spacing: 0.08em; opacity: 0.72;
+  display: flex; gap: 0.8rem; align-items: baseline; flex-wrap: wrap;
+}
+.hero__botao {
+  font: inherit; letter-spacing: inherit; color: var(--ouro); background: none; cursor: pointer;
+  border: 0; border-bottom: 1px solid currentColor; padding: 0 0 1px;
+}
+.hero__botao:focus-visible { outline: 2px solid var(--ouro); outline-offset: 4px; }
+.hero--cumprido .hero__dica { opacity: 0; transition: opacity 0.6s ease; }
+
+/* Na abertura o objeto 3D sai: o assunto aqui é a peça de verdade. */
+.em-hero #palco { opacity: 0; }
+
 /* O texto respeita o campo: nunca atravessa o corte. */
 .bloco--verde .dentro, .bloco--barro .dentro { max-width: min(1320px, 100%); }
 /* Amarrado ao campo, como o bloco branco: em 1024 de largura os 46rem
@@ -245,10 +297,10 @@ strong, b { font-weight: 600; }
    inteira, e é ele que fecha a lista. */
 .processos--cinco {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(0.5rem, 1.1vh, 0.9rem) var(--e2);
+  gap: clamp(0.4rem, 0.9vh, 0.8rem) var(--e2);
   max-width: min(76rem, 62%);
 }
-.processos--cinco .proc { padding: 0.6rem 0.75rem; gap: 0.15rem; box-shadow: 4px 4px 0 currentColor; }
+.processos--cinco .proc { padding: 0.5rem 0.75rem; gap: 0.12rem; box-shadow: 4px 4px 0 currentColor; }
 .processos--cinco .proc__t { font-size: clamp(0.98rem, 1.25vw, 1.25rem); }
 .processos--cinco .proc__d { font-size: var(--t-micro); line-height: 1.32; max-width: 46ch; }
 .processos--cinco .proc:last-child { grid-column: 1 / -1; }
@@ -523,6 +575,87 @@ strong, b { font-weight: 600; }
   .pre__bico { display: none; }
 }
 
+
+/* ================= A FOLHA RESPONDIDA =================
+   Os slides do SLM repetem o desenho da folha em papel: cada resposta
+   numa caixa com a faixa do número em cima, como na folha entregue. Quem
+   corrigiu a folha reconhece a folha. */
+.folha { display: grid; gap: clamp(0.7rem, 1.8vh, 1.1rem); }
+.folha--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.caixa {
+  border: var(--borda) solid currentColor; box-shadow: 5px 5px 0 currentColor;
+  display: grid; align-content: start;
+}
+.caixa__n {
+  display: block; padding: 0.34rem 0.75rem;
+  font-size: var(--t-micro); font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em;
+  border-bottom: var(--borda) solid currentColor;
+  background: color-mix(in srgb, currentColor 9%, transparent);
+}
+.caixa__corpo { padding: 0.45rem 0.7rem 0.55rem; display: grid; gap: 0.25rem; }
+.caixa__t {
+  font-family: var(--display); font-weight: 500; font-size: clamp(1.02rem, 1.45vw, 1.4rem);
+  line-height: 1.08; margin: 0;
+}
+.caixa__l { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.12rem; }
+.caixa__l li { font-size: var(--t-peq); line-height: 1.34; padding-left: 0.95rem; position: relative; max-width: 58ch; }
+.caixa__l li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 0.42rem; height: 2px; background: currentColor; }
+
+/* Amarrado ao campo de cor, na mesma unidade dos outros slides (% do
+   .dentro). Medido: com largura livre as caixas atravessavam a parada
+   de cor em até 486 px e caíam em cima do objeto 3D. 59 % e 55 % deixam
+   folga antes do corte em 62 % e 58 % de 1024 a 1920 de largura. */
+.bloco--branco .slm > .folha, .bloco--branco .slm > .caixa { max-width: 59%; }
+.bloco--verde .slm > .folha, .bloco--verde .slm > .caixa,
+.bloco--barro .slm > .folha, .bloco--barro .slm > .caixa { max-width: 55%; }
+.bloco--vazado .slm > .folha, .bloco--vazado .slm > .caixa { max-width: 56%; }
+.slm .h2--curto { margin-bottom: clamp(0.6rem, 1.6vh, 1rem); font-size: clamp(1.6rem, 3.3vw, 2.9rem); }
+.caixa--faixa .caixa__t { font-size: clamp(0.98rem, 1.3vw, 1.25rem); }
+.slm .caixa + .folha, .slm .folha + .caixa, .slm .caixa + .caixa { margin-top: clamp(0.6rem, 1.6vh, 1rem); }
+
+/* O item 5 é o coração do SLM: meta com número, e como medir. */
+.kpis { width: 100%; border-collapse: collapse; font-size: var(--t-peq); line-height: 1.3; }
+.kpis th {
+  text-align: left; font-size: var(--t-micro); font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.14em; padding: 0.35rem 0.8rem 0.35rem 0;
+  border-bottom: var(--borda) solid currentColor;
+}
+.kpis td { padding: 0.28rem 0.8rem 0.28rem 0; border-bottom: 2px solid currentColor; vertical-align: top; }
+.kpis td:first-child { font-weight: 600; }
+.kpis .kpi__meta {
+  font-family: var(--display); font-weight: 500; font-size: 1.12em; white-space: nowrap;
+  color: var(--barro-campo);
+}
+
+/* O item 8: o fluxo, lido de cima para baixo e depois na segunda
+   coluna. `grid-auto-flow: column` garante a ordem de leitura. */
+.fluxo {
+  list-style: none; margin: 0; padding: 0; counter-reset: passo;
+  display: grid; grid-auto-flow: column; column-gap: clamp(1rem, 2.4vw, 2rem); row-gap: 0;
+}
+.fluxo li {
+  counter-increment: passo;
+  display: grid; grid-template-columns: 2.1rem minmax(0, 1fr); gap: 0.5rem; align-items: baseline;
+  padding: 0.34rem 0; border-bottom: 2px solid currentColor;
+}
+.fluxo li::before {
+  content: counter(passo, decimal-leading-zero);
+  font-family: var(--display); font-weight: 500; font-size: 1.1rem; color: var(--barro-campo);
+}
+.fluxo__e { font-weight: 600; font-size: var(--t-peq); }
+.fluxo__d { display: block; font-size: var(--t-micro); line-height: 1.3; opacity: 0.86; margin-top: 0.1rem; }
+.selo {
+  display: inline-block; margin-left: 0.4rem; padding: 0.02rem 0.4rem; vertical-align: 0.08em;
+  font-size: calc(var(--t-micro) * 0.9); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
+  border: 2px solid currentColor;
+}
+.selo--ia { background: var(--ouro); border-color: var(--ouro); color: var(--carvao); }
+
+/* Fora do campo branco (blocos vazados/verdes) a meta e o número
+   do fluxo vão para o ouro, que é o que tem contraste no escuro. */
+.bloco--vazado .kpis .kpi__meta, .bloco--verde .kpis .kpi__meta,
+.bloco--vazado .fluxo li::before, .bloco--verde .fluxo li::before { color: var(--ouro); }
+
 /* Plano B: se o projetor morrer, isto tem de sair no papel legível.
    Sem esta regra o PDF sai uma página só, com texto branco sobre
    branco. */
@@ -569,7 +702,30 @@ strong, b { font-weight: 600; }
 <main class="deck" id="deck">
 
   <!-- 0 · CAPA -->
-  <section class="bloco bloco--vazado" data-titulo="Capa" data-estado="0">
+  <!-- H · HERO: a peça que você acende -->
+  <section class="bloco bloco--hero" id="hero" data-titulo="Abertura" data-objeto="a peça" data-estado="0">
+    <canvas id="luz" aria-hidden="true"></canvas>
+    <div class="dentro surge hero">
+      <p class="marca">vereda<em>Palmas · Tocantins</em></p>
+      <h1 class="hero__titulo">Toda luz é <em>uma promessa</em></h1>
+      <p class="lead hero__apoio">Nível de serviço: a vereda só promete o que consegue cumprir.</p>
+      <div class="medidor" id="medidor">
+        <div class="medidor__barra" aria-hidden="true">
+          <span class="medidor__cheio"></span>
+          <span class="medidor__meta"></span>
+        </div>
+        <p class="medidor__rot" aria-live="polite">
+          <span>medido <b id="medido">0%</b></span>
+          <span>meta <b>80%</b></span>
+          <span class="medidor__ok">meta cumprida</span>
+        </p>
+      </div>
+      <p class="hero__dica">passe o ponteiro na peça
+        <button class="hero__botao" type="button" id="acender">ou acenda aqui</button></p>
+    </div>
+  </section>
+
+  <section class="bloco bloco--vazado" data-titulo="Capa" data-objeto="ideia" data-estado="0">
     <div class="dentro surge">
       <p class="marca">vereda<em>Palmas · Tocantins</em></p>
       <h1>Máquina de fazer <em>coisas</em></h1>
@@ -588,14 +744,14 @@ strong, b { font-weight: 600; }
   </section>
 
   <!-- 1 · ESTRATÉGIA -->
-  <section class="bloco bloco--vazado" data-titulo="Estratégia" data-estado="0.45">
+  <section class="bloco bloco--vazado" data-titulo="Estratégia" data-objeto="ideia" data-estado="0.45">
     <div class="dentro surge">
       <p class="eyebrow"><span class="num">01</span> Estratégia de serviço · a ideia antes da matéria</p>
       <h2 class="h2--curto">Os <em>cinco processos</em> nascem aqui</h2>
       <p class="lead lead--curto">
-        Decoração personalizada em impressão 3D: luminárias, vasos e peças
-        exclusivas. Os cinco processos da Estratégia de Serviço são cinco
-        decisões que a vereda já toma todo dia.
+        Decoração personalizada para casa em impressão 3D: luminárias, vasos
+        e peças exclusivas. O diferencial: personalização, preço acessível,
+        rapidez na produção, elegância junto com tecnologia.
       </p>
       <div class="processos processos--cinco">
         <div class="proc">
@@ -628,7 +784,7 @@ strong, b { font-weight: 600; }
   </section>
 
   <!-- 2 · DESENHO -->
-  <section class="bloco bloco--verde" data-titulo="Desenho" data-estado="1.2">
+  <section class="bloco bloco--verde" data-titulo="Desenho" data-objeto="fatiando" data-estado="1.2">
     <div class="dentro surge etapa-texto">
       <p class="eyebrow"><span class="num">02</span> Desenho de serviço · o fatiador</p>
       <h2>Virar <em>caminho</em> de máquina</h2>
@@ -642,8 +798,55 @@ strong, b { font-weight: 600; }
     </div>
   </section>
 
+
+
+  <!-- 02·1 · ESCOPO E REQUISITOS -->
+  <section class="bloco bloco--branco" data-titulo="Escopo e requisitos" data-objeto="fatiando" data-estado="1.3">
+    <div class="dentro surge slm">
+      <p class="eyebrow"><span class="num">02·1</span> Nível de serviço (SLM)</p>
+      <h2 class="h2--curto">O que a vereda <em>promete</em></h2>
+      <div class="folha folha--2"><div class="caixa"><span class="caixa__n">1 · Escopo do serviço</span><div class="caixa__corpo"><p class="caixa__t">Escopo: o que a vereda promete</p><ul class="caixa__l"><li>Catálogo: cinco modelos e o que o cliente inventar</li><li>Luminárias, vasos, enfeites e lembranças em 3D</li><li>Cor, tamanho e nome; prévia antes de imprimir</li><li>Do atendimento on-line à entrega: Palmas e Brasil</li><li>Fora do escopo: loja física</li></ul></div></div><div class="caixa"><span class="caixa__n">2 · Requisitos de negócio</span><div class="caixa__corpo"><p class="caixa__t">Requisitos: do negócio ao SLR</p><ul class="caixa__l"><li>Negócio: pedido on-line, operado por uma pessoa</li><li>Preço: custo real + margem de 120 %</li><li>SLR: prazo informado antes de pagar</li><li>SLR: prévia aprovada antes da máquina</li><li>Lei: resposta em até 5 dias; arrependimento em 7</li></ul></div></div></div>
+    </div>
+  </section>
+
+  <!-- 02·2 · PROCESSO SLM -->
+  <section class="bloco bloco--vazado" data-titulo="Processo SLM" data-objeto="fatiando" data-estado="1.4">
+    <div class="dentro surge slm">
+      <p class="eyebrow"><span class="num">02·2</span> Nível de serviço (SLM)</p>
+      <h2 class="h2--curto">Da escuta à <em>melhoria</em></h2>
+      <div class="folha"><div class="caixa"><span class="caixa__n">3 · Definição de processos</span><div class="caixa__corpo"><p class="caixa__t">SLR → UC → SLA → monitorar → revisar → SIP</p><ul class="caixa__l"><li>SLR: ouvir o que o cliente precisa</li><li>UC sustenta as metas; sem OLA (uma pessoa)</li><li>SLA: padrão no site, fechado na prévia</li><li>Monitorar as metas em cada pedido</li><li>Revisão mensal alimenta o SIP</li></ul></div></div></div>
+    </div>
+  </section>
+
+  <!-- 02·3 · MÉTRICAS E KPIS -->
+  <section class="bloco bloco--branco" data-titulo="Métricas e KPIs" data-objeto="juntando" data-estado="1.55">
+    <div class="dentro surge slm">
+      <p class="eyebrow"><span class="num">02·3</span> Nível de serviço (SLM)</p>
+      <h2 class="h2--curto">Promessa <em>com número</em></h2>
+      <div class="caixa"><span class="caixa__n">5 · Definição de métricas e KPIs</span><div class="caixa__corpo"><table class="kpis"><thead><tr><th scope="col">Indicador</th><th scope="col">Meta</th><th scope="col">Como medir</th></tr></thead><tbody><tr><td>SLA · Reclamação respondida</td><td class="kpi__meta">100 % em até 5 dias</td><td>data da reclamação × data da resposta</td></tr><tr><td>SLA · Prazo informado antes de pagar</td><td class="kpi__meta">100 % dos pedidos</td><td>data informada no pedido (lei)</td></tr><tr><td>SLA · Postagem na data</td><td class="kpi__meta">100 % dos pedidos</td><td>rastreio do Melhor Envio; atraso anotado com a causa</td></tr><tr><td>SLA · Peça conforme a prévia</td><td class="kpi__meta">100 % das enviadas</td><td>foto ao lado da prévia, antes de embalar</td></tr><tr><td>Interno · Produção da cúpula</td><td class="kpi__meta">até 3 dias úteis</td><td>início na P2S × peça embalada</td></tr><tr><td>Interno · Falha de impressão</td><td class="kpi__meta">abaixo de 15 %</td><td>falhas ÷ impressões do mês</td></tr><tr><td>Interno · Satisfação</td><td class="kpi__meta">não cai da linha de base</td><td>avaliação pedida em toda entrega</td></tr></tbody></table></div></div>
+    </div>
+  </section>
+
+  <!-- 02·4 · TECNOLOGIA E FORNECEDORES -->
+  <section class="bloco bloco--verde" data-titulo="Tecnologia e fornecedores" data-objeto="juntando" data-estado="1.65">
+    <div class="dentro surge slm">
+      <p class="eyebrow"><span class="num">02·4</span> Nível de serviço (SLM)</p>
+      <h2 class="h2--curto">Quem <em>sustenta</em> a promessa</h2>
+      <div class="folha folha--2"><div class="caixa"><span class="caixa__n">4 · Tecnologia e ferramentas</span><div class="caixa__corpo"><p class="caixa__t">Ferramentas que sustentam a promessa</p><ul class="caixa__l"><li>Balcão: site, Instagram, WhatsApp e calculadora de preço</li><li>Medição: Supabase registra as datas do SLA</li><li>Pagar e avisar: Mercado Pago e Resend; entregar: Melhor Envio</li><li>Desenho: Blender, IA de apoio, Bambu Studio</li><li>Fábrica: P2S + AMS 2 Pro, PLA Matte e PETG</li></ul></div></div><div class="caixa"><span class="caixa__n">7 · Gestão de fornecedores</span><div class="caixa__corpo"><p class="caixa__t">Gestão de Fornecedores sustenta o SLA</p><ul class="caixa__l"><li>Termos de uso como UC: Netlify, Supabase, Resend</li><li>Mercado Pago: taxa de 4,99 % já no preço</li><li>Prazo = fila + produção + frete cotado no Melhor Envio</li><li>Meta de 100 % na postagem; atraso do frete conta e é avisado</li><li>Motoboy com combinado escrito; rolo reserva de PLA</li></ul></div></div></div>
+    </div>
+  </section>
+
+  <!-- 02·5 · FLUXO DO DESENHO -->
+  <section class="bloco bloco--branco" data-titulo="Fluxo do desenho" data-objeto="juntando" data-estado="1.8">
+    <div class="dentro surge slm">
+      <p class="eyebrow"><span class="num">02·5</span> Nível de serviço (SLM)</p>
+      <h2 class="h2--curto">Do contato à <em>revisão</em></h2>
+      <div class="caixa"><span class="caixa__n">8 · Fluxo do desenho de serviço</span><div class="caixa__corpo"><ol class="fluxo" style="grid-template-rows: repeat(5, auto)"><li><span><span class="fluxo__e">Primeiro contato</span><span class="selo">meta</span><span class="fluxo__d">Instagram, WhatsApp ou site; registrado com data e hora</span></span></li><li><span><span class="fluxo__e">Levantar o pedido e o SLR</span><span class="fluxo__d">modelo ou encomenda; cor, tamanho e nome</span></span></li><li><span><span class="fluxo__e">Ideias com IA (só encomenda)</span><span class="selo selo--ia">IA</span><span class="fluxo__d">só na encomenda, a partir da descrição, sem dado pessoal</span></span></li><li><span><span class="fluxo__e">Revisão humana e prévia</span><span class="selo">meta</span><span class="fluxo__d">Andrey modela, fatia e confere antes de mostrar</span></span></li><li><span><span class="fluxo__e">Prévia aprovada = SLA</span><span class="selo">meta</span><span class="fluxo__d">cliente aprova peça, preço e prazo; paga no Mercado Pago</span></span></li><li><span><span class="fluxo__e">Impressão</span><span class="selo">meta</span><span class="fluxo__d">sai da fila da P2S; se parar, o cliente é avisado</span></span></li><li><span><span class="fluxo__e">Acabar, conferir, embalar</span><span class="selo">meta</span><span class="fluxo__d">foto ao lado da prévia; fora do padrão é refeita</span></span></li><li><span><span class="fluxo__e">Postagem e entrega</span><span class="selo">meta</span><span class="fluxo__d">Melhor Envio com rastreio; em Palmas, retirada ou motoboy</span></span></li><li><span><span class="fluxo__e">Pós-venda</span><span class="selo">meta</span><span class="fluxo__d">avaliação, reclamação e arrependimento de 7 dias</span></span></li><li><span><span class="fluxo__e">Revisão do serviço</span><span class="selo">meta</span><span class="fluxo__d">relatório mensal compara com o SLA e vira melhoria</span></span></li></ol></div></div>
+    </div>
+  </section>
+
   <!-- 3 · TRANSIÇÃO -->
-  <section class="bloco bloco--vazado" data-titulo="Transição" data-estado="2.15">
+  <section class="bloco bloco--vazado" data-titulo="Transição" data-objeto="1ª camada" data-estado="2.15">
     <div class="dentro surge etapa-texto">
       <p class="eyebrow"><span class="num">03</span> Transição de serviço · a primeira camada</p>
       <h2>A primeira camada decide a <em>peça inteira</em></h2>
@@ -658,7 +861,7 @@ strong, b { font-weight: 600; }
   </section>
 
   <!-- 4 · OPERAÇÃO -->
-  <section class="bloco bloco--barro" data-titulo="Operação" data-estado="3.15">
+  <section class="bloco bloco--barro" data-titulo="Operação" data-objeto="acesa" data-estado="3.15">
     <div class="dentro surge etapa-texto">
       <p class="eyebrow"><span class="num">04</span> Operação de serviço · camada após camada</p>
       <h2>A máquina roda, alguém <em>olha</em></h2>
@@ -673,7 +876,7 @@ strong, b { font-weight: 600; }
   </section>
 
   <!-- 5 · MELHORIA -->
-  <section class="bloco bloco--vazado" data-titulo="Melhoria" data-estado="3.9">
+  <section class="bloco bloco--vazado" data-titulo="Melhoria" data-objeto="estilhaçando" data-estado="3.9">
     <div class="dentro surge">
       <p class="eyebrow"><span class="num">05</span> Melhoria contínua · e recomeça</p>
       <h2>A peça pronta vira o <em>modelo</em> da próxima</h2>
@@ -691,7 +894,7 @@ strong, b { font-weight: 600; }
   </section>
 
   <!-- 6 · IA -->
-  <section class="bloco bloco--branco" data-titulo="IA" data-estado="4">
+  <section class="bloco bloco--branco" data-titulo="IA" data-objeto="remontando" data-estado="4">
     <div class="dentro surge">
       <p class="eyebrow"><span class="num">06</span> Decisão estratégica · uso de IA</p>
       <h2>Adotar, testar ou <em>recusar</em></h2>
@@ -720,7 +923,27 @@ strong, b { font-weight: 600; }
   </section>
 
   <!-- 7 · FECHO -->
-  <section class="bloco bloco--vazado" data-titulo="Fim" data-estado="4">
+
+
+  <!-- 06·1 · IA: RISCO E PROTEÇÃO -->
+  <section class="bloco bloco--barro" data-titulo="IA: risco e proteção" data-objeto="remontando" data-estado="4">
+    <div class="dentro surge slm">
+      <p class="eyebrow"><span class="num">06·1</span> Uso de IA · risco e proteção</p>
+      <h2 class="h2--curto">Se a IA <em>errar</em></h2>
+      <div class="caixa caixa--faixa"><span class="caixa__n">6 · Uso de IA no serviço</span><div class="caixa__corpo"><p class="caixa__t">IA limitada, só no Desenho: apoia ideias e a prévia da encomenda. Andrey aprova o modelo; o cliente aprova a prévia.</p></div></div><div class="folha folha--2"><div class="caixa"><span class="caixa__n">a · Risco</span><div class="caixa__corpo"><p class="caixa__t">Risco: erro e uso indevido da IA</p><ul class="caixa__l"><li>Prévia errada vira promessa que a máquina não cumpre</li><li>Cúpula refeita: até R$ 30,05 e 11 h 41 de máquina</li><li>Forma parecida com criação protegida</li><li>Dados do cliente no fornecedor da IA</li></ul></div></div><div class="caixa"><span class="caixa__n">b · Proteção e supervisão</span><div class="caixa__corpo"><p class="caixa__t">Proteção: uma pessoa aprova antes</p><ul class="caixa__l"><li>Todo modelo fatiado no Bambu Studio antes da prévia</li><li>Checagem de semelhança com criação protegida</li><li>IA recebe só a descrição; o nome entra no Blender</li><li>Cliente aprova a prévia: a prévia é o contrato</li><li>Responsável: Andrey, registra cada uso e cada erro</li></ul></div></div></div>
+    </div>
+  </section>
+
+  <!-- 06·2 · IA: CONTINUIDADE E QUALIDADE -->
+  <section class="bloco bloco--verde" data-titulo="IA: continuidade e qualidade" data-objeto="remontando" data-estado="4">
+    <div class="dentro surge slm">
+      <p class="eyebrow"><span class="num">06·2</span> Uso de IA · continuidade e qualidade</p>
+      <h2 class="h2--curto">Se a IA <em>parar</em></h2>
+      <div class="folha folha--2"><div class="caixa"><span class="caixa__n">c · Continuidade</span><div class="caixa__corpo"><p class="caixa__t">Sem IA, a vereda continua acesa</p><ul class="caixa__l"><li>IA fora do ar: prévia à mão no Blender</li><li>Resposta errada: barrada na revisão do Andrey</li><li>Catálogo, atendimento, pagamento, impressão e entrega seguem</li><li>Prazo só conta após a prévia aprovada</li><li>Cliente avisado se a prévia atrasar</li></ul></div></div><div class="caixa"><span class="caixa__n">d · Qualidade</span><div class="caixa__corpo"><p class="caixa__t">Qualidade: a IA tem de acelerar</p><ul class="caixa__l"><li>Indicador: tempo de produção até a prévia enviada</li><li>É a medida já apresentada, junto da satisfação</li><li>Meta: abaixo da linha de base feita à mão</li><li>Satisfação, recusas e reimpressões não pioram</li><li>Sem ganho na revisão, a IA sai</li></ul></div></div></div>
+    </div>
+  </section>
+
+  <section class="bloco bloco--vazado" data-titulo="Fim" data-objeto="acende" data-estado="4">
     <div class="dentro surge">
       <p class="eyebrow"><span class="num num--simbolo">∞</span> O ciclo não fecha</p>
       <h1>A peça <em>acende</em></h1>
@@ -742,6 +965,7 @@ strong, b { font-weight: 600; }
      objeto 3D de fora e a apresentação inteira perderia o assunto. -->
 <script src="three.min.js"></script>
 <script src="objeto.js"></script>
+<script src="luz.js"></script>
 <script>
 (function () {
   "use strict";
@@ -756,7 +980,12 @@ strong, b { font-weight: 600; }
 
   // O rodapé tem de dizer o que a tela mostra: no bloco da Melhoria o
   // objeto estilhaça, não fica aceso.
-  var NOMES = ["ideia", "ideia", "fatiando", "1ª camada", "acesa", "estilhaçando", "remontando", "acende"];
+  // O nome do estado do objeto mora no próprio bloco (data-objeto): com
+  // slides entrando no meio, uma lista paralela desencontrava na hora.
+  function rotular(i) {
+    rotulo.innerHTML = "<span>bloco <b>" + i + "</b> / " + (blocos.length - 1) + "</span>" +
+      "<span>objeto: <b>" + (blocos[i].dataset.objeto || "") + "</b></span>";
+  }
 
   var pontos = blocos.map(function (b, i) {
     var el = document.createElement("button");
@@ -820,6 +1049,7 @@ strong, b { font-weight: 600; }
     else if (["ArrowUp","ArrowLeft","PageUp","Backspace"].indexOf(e.key) >= 0) { e.preventDefault(); irPara(aqui - 1); }
     else if (e.key === "Home") { e.preventDefault(); irPara(0); }
     else if (e.key === "End") { e.preventDefault(); irPara(blocos.length - 1); }
+    else if ((e.key === "l" || e.key === "L") && aqui === 0 && luzHero) { e.preventDefault(); luzHero.acenderTudo(); }
     else if (e.key === "f" || e.key === "F") {
       // Sem isto, o que a turma vê projetado é a barra de abas e o
       // caminho /Users/... na URL.
@@ -855,6 +1085,40 @@ strong, b { font-weight: 600; }
     motor = window.iniciarObjeto({ canvas: document.getElementById("palco") });
     window.__objeto = motor;
   }
+
+  /* ---- o hero: a peça que você acende ----
+     O medidor compara o MEDIDO com a META. Quando passa, a peça acende
+     inteira e fica. Teclado, passador e toque sem arrasto têm saída:
+     o botão "acenda aqui" e a tecla L. */
+  var hero = document.getElementById("hero");
+  var luzHero = null;
+  if (hero && !reduzido && typeof window.iniciarLuz === "function") {
+    var cheio = hero.querySelector(".medidor__cheio");
+    var medido = document.getElementById("medido");
+    luzHero = window.iniciarLuz({
+      canvas: document.getElementById("luz"),
+      apagada: "assets/hero/apagada.jpg",
+      acesa: "assets/hero/acesa.jpg",
+      aoMedir: function (m) {
+        var pct = Math.round(m * 100);
+        if (cheio) cheio.style.width = pct + "%";
+        if (medido) medido.textContent = pct + "%";
+      },
+      aoCumprir: function () { hero.classList.add("hero--cumprido"); }
+    });
+  }
+  if (hero && !luzHero) hero.classList.add("sem-luz");
+  window.__luz = luzHero;
+  var botaoAcender = document.getElementById("acender");
+  if (botaoAcender) botaoAcender.addEventListener("click", function () {
+    botaoAcender.blur();
+    if (luzHero) luzHero.acenderTudo();
+  });
+  function naAbertura(sim) {
+    document.documentElement.classList.toggle("em-hero", sim);
+    if (luzHero) luzHero.pausar(!sim);
+  }
+  naAbertura(true);
 
   /* ---- a máscara de letras ----
      Divide em palavras (para a quebra de linha continuar normal) e
@@ -943,16 +1207,17 @@ strong, b { font-weight: 600; }
       if (i >= 0) {
         atual = i;
         pontos.forEach(function (p, j) { p.setAttribute("aria-current", j === i ? "true" : "false"); });
-        rotulo.innerHTML = "<span>etapa <b>" + (i) + "</b> / 7</span><span>objeto: <b>" + NOMES[i] + "</b></span>";
+        rotular(i);
         if (motor) motor.definirEstado(parseFloat(e.target.dataset.estado));
       }
       animarBloco(e.target);
     });
     acenderPeca(atual === blocos.length - 1);
+    naAbertura(atual === 0);
   }, { threshold: 0.5 });
   blocos.forEach(function (b) { obs.observe(b); });
   pontos[0].setAttribute("aria-current", "true");
-  rotulo.innerHTML = "<span>etapa <b>0</b> / 7</span><span>objeto: <b>ideia</b></span>";
+  rotular(0);
 
   // Se o deck abriu em segundo plano, as transições estavam congeladas e
   // nada foi revelado. Quando a aba ganha foco, arma o que está na tela.
@@ -1033,8 +1298,14 @@ strong, b { font-weight: 600; }
   var pre = document.getElementById("pre");
   if (pre) {
     var pct = document.getElementById("pre-pct");
-    var pesos = { fontes: 0.4, objeto: 0.3, video: 0.3 };
-    var feito = { fontes: 0, objeto: 0, video: 0 };
+    var pesos = { fontes: 0.3, objeto: 0.2, video: 0.2, hero: 0.3 };
+    var feito = { fontes: 0, objeto: 0, video: 0, hero: 0 };
+    if (luzHero) {
+      var espiaHero = setInterval(function () {
+        if (luzHero.pronto()) { feito.hero = 1; clearInterval(espiaHero); }
+      }, 100);
+      setTimeout(function () { feito.hero = 1; clearInterval(espiaHero); }, 5000);
+    } else { feito.hero = 1; }
     var mostrado = 0, encerrado = false;
 
     if (document.fonts && document.fonts.ready) {
@@ -1085,7 +1356,8 @@ strong, b { font-weight: 600; }
 
     (function passoPre() {
       if (encerrado) return;
-      var alvoPre = feito.fontes * pesos.fontes + feito.objeto * pesos.objeto + feito.video * pesos.video;
+      var alvoPre = feito.fontes * pesos.fontes + feito.objeto * pesos.objeto +
+                    feito.video * pesos.video + feito.hero * pesos.hero;
       mostrado += (alvoPre - mostrado) * 0.10;
       pre.style.setProperty("--p", mostrado.toFixed(3));
       if (pct) pct.textContent = Math.round(mostrado * 100) + "%";

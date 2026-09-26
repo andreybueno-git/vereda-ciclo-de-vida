@@ -7,6 +7,49 @@ Gerenciamento de Serviços de TI · apresentação em 19/09/2026
 
 ---
 
+## Duas folhas, uma apresentação
+
+O deck junta as duas atividades da disciplina aplicadas à vereda:
+
+| Folha | Onde está no deck |
+|---|---|
+| **12/09 · Planejamento estratégico e ciclo de vida** (5 etapas, os 5 processos do novo serviço, decisão sobre IA) | capa, 01 a 05 e 06 |
+| **19/09 · Desenho do serviço: Gerenciamento do Nível de Serviço (SLM)** (itens 1 a 8) | 02·1 a 02·5, dentro do Desenho, que é onde o SLM mora no ITIL |
+| **19/09 · Segurança, continuidade e qualidade do uso de IA** (a, b, c, d) | 06·1 e 06·2, logo depois da decisão sobre IA |
+
+Os slides do SLM repetem o desenho da folha em papel: cada resposta numa
+caixa com a faixa do número em cima.
+
+As respostas da folha de SLM foram escritas por três redações
+independentes (rigor ITIL, realismo de uma oficina de uma pessoa, e a
+leitura de quem corrige), julgadas item a item por três juízes e
+revisadas por dois céticos: um de ITIL e um caçando número inventado. Os
+céticos derrubaram 10 pontos, entre eles a ordem do processo (os
+contratos de apoio, UC, são conferidos ANTES de publicar o SLA) e uma
+meta impossível para uma impressora só ("entrega 100 % na data" virou
+"prazo informado 100 %, por lei" + "postagem na data", com todo atraso
+contado). Todo número sai de um fato da vereda ou de uma conta a partir
+dele: 11 h 41 de máquina por cúpula, R$ 80/kg, margem de 120 %, os 5
+dias de resposta do Decreto 7.962/2013, os 7 dias de arrependimento do
+CDC.
+
+## A abertura: a peça que você acende
+
+A primeira tela é a luminária apagada. O ponteiro injeta luz numa
+simulação de fluido na GPU e a peça acende por onde a luz escorre; a luz
+dissipa e apaga sozinha. Um medidor compara o **medido** com a **meta**
+(80 % da peça): quando passa, a luminária acende inteira e fica. É o
+SLM numa linha: o serviço é uma promessa com número, e ela só vale se
+alguém medir.
+
+- Os dois quadros (apagada e acesa) saem do Blender com a mesma câmera,
+  em `render_hero.py`: alinhados pixel a pixel.
+- O medidor só conta células onde a luminária está de fato (lidas da
+  própria imagem acesa): passar a mão no fundo preto não enche a meta.
+- Sem WebGL ou com movimento reduzido, a peça já aparece acesa e o
+  medidor não finge medir.
+- Teclado e passador: tecla **L** ou o botão "ou acenda aqui".
+
 ## A ideia
 
 O deck tem **um objeto 3D só**, do começo ao fim, que **morfa** entre as
@@ -33,7 +76,7 @@ python3 -m http.server 8811
 
 Depois `http://localhost:8811`. No VS Code, **F5** ou *Open with Live Server*.
 
-Navegar: setas `←` `→` (ou `↑` `↓`), barra de espaço, `Home` e `End`.
+Navegar: setas `←` `→` (ou `↑` `↓`), barra de espaço, `Home` e `End`. `F` entra em tela cheia; `L` acende a peça na abertura.
 
 ## O motion das letras
 
