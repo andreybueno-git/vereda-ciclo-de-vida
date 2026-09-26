@@ -1,0 +1,285 @@
+{
+  "_sobre": "Respostas da folha 'Desenho do Serviço: Gerenciamento do Nível de Serviço (SLM)' de 19/09/2026, aplicadas à vereda. Saída final do workflow (3 redações → 3 juízes → síntese → 2 céticos → correção). 'folha' = texto para copiar à mão na caixa do papel (≤45 palavras); 'slide_*' = o que foi projetado. Os slides 02·1–02·5 e 06·1–06·2 do index.html foram gerados a partir deste arquivo.",
+  "final": {
+    "hero_titulo": "Promessa cumprida acende a luz",
+    "hero_apoio": "Nível de serviço: a vereda só promete o que consegue cumprir.",
+    "item1_escopo": {
+      "folha": "Catálogo de serviços: um dos cinco modelos ou peça sob encomenda, com cor, tamanho e nome. Luminárias, vasos, enfeites e lembranças em 3D. Inclui atendimento on-line, prévia, pagamento, produção e entrega em Palmas e Brasil. Fora: loja física. Capacidade: uma pessoa e uma P2S.",
+      "slide_titulo": "Escopo: o que a vereda promete",
+      "slide_linhas": [
+        "Catálogo: cinco modelos e o que o cliente inventar",
+        "Luminárias, vasos, enfeites e lembranças em 3D",
+        "Cor, tamanho e nome; prévia antes de imprimir",
+        "Do atendimento on-line à entrega: Palmas e Brasil",
+        "Fora do escopo: loja física"
+      ]
+    },
+    "item2_requisitos": {
+      "folha": "Negócio: pedido on-line; preço cobre material, energia e desgaste, com margem de 120%. SLR: prazo informado antes de pagar, contando a fila da P2S; prévia aprovada antes da máquina; Pix ou cartão; resposta a reclamação em até 5 dias; arrependimento em 7 dias.",
+      "slide_titulo": "Requisitos: do negócio ao SLR",
+      "slide_linhas": [
+        "Negócio: pedido on-line, operado por uma pessoa",
+        "Preço: custo real + margem de 120 %",
+        "SLR: prazo informado antes de pagar",
+        "SLR: prévia aprovada antes da máquina",
+        "Lei: resposta em até 5 dias; arrependimento em 7"
+      ]
+    },
+    "item3_processos": {
+      "folha": "1) levantar o SLR; 2) conferir se os UC sustentam as metas (frete cotado, termos de uso; sem OLA: uma pessoa); 3) SLA padrão no site, fechado na prévia (peça, preço, prazo); 4) monitorar cada pedido; 5) relatório e revisão mensal; 6) melhorias no SIP.",
+      "slide_titulo": "Processo SLM: da escuta à melhoria",
+      "slide_linhas": [
+        "SLR: ouvir o que o cliente precisa",
+        "UC sustenta as metas; sem OLA (uma pessoa)",
+        "SLA: padrão no site, fechado na prévia",
+        "Monitorar as metas em cada pedido",
+        "Revisão mensal alimenta o SIP"
+      ]
+    },
+    "item4_tecnologia": {
+      "folha": "Balcão: site (Netlify) com calculadora de preço, Instagram, WhatsApp; Supabase vai registrar as datas que medem o SLA; Resend, Mercado Pago, Melhor Envio. Desenho: Blender, IA de apoio, Bambu Studio. Fábrica: P2S + AMS 2 Pro, PLA Matte e PETG.",
+      "slide_titulo": "Ferramentas que sustentam a promessa",
+      "slide_linhas": [
+        "Balcão: site, Instagram, WhatsApp e calculadora de preço",
+        "Medição: Supabase registra as datas do SLA",
+        "Pagar e avisar: Mercado Pago e Resend; entregar: Melhor Envio",
+        "Desenho: Blender, IA de apoio, Bambu Studio",
+        "Fábrica: P2S + AMS 2 Pro, PLA Matte e PETG"
+      ]
+    },
+    "item5_kpis": {
+      "folha": "SLA: reclamação respondida em até 5 dias; prazo informado antes de pagar; postagem na data, com todo atraso de entrega contado; peça conforme a prévia. Interno: produção da cúpula em até 3 dias úteis; falha abaixo de 15%; satisfação na linha de base ou acima.",
+      "slide_titulo": "Seis metas que medem a promessa",
+      "tabela": [
+        {
+          "indicador": "SLA · Resposta a reclamação",
+          "meta": "100 % das reclamações respondidas em até 5 dias",
+          "como_medir": "Data da reclamação (WhatsApp, Instagram ou e-mail) e data da resposta, registradas no pedido no Supabase; conferido no relatório mensal",
+          "origem_do_numero": "Fato da ficha: o Decreto 7.962/2013 manda responder reclamação em até 5 dias. É 100 % porque é obrigação legal."
+        },
+        {
+          "indicador": "SLA · Prazo informado e postagem na data",
+          "meta": "Data de entrega informada antes do pagamento em 100 % dos pedidos (lei). Meta de 100 % dos pedidos postados no Melhor Envio até a data de postagem prevista no prazo; em Palmas, entregues na retirada ou pelo motoboy até a data informada. É meta, não garantia: se a P2S parar, o cliente é avisado antes do vencimento, com nova data. A entrega final pela transportadora é medida contra a data informada, com todo atraso contado e a causa anotada (vereda ou transportadora).",
+          "como_medir": "Data informada, data de postagem e data de entrega (rastreio do Melhor Envio, retirada ou motoboy) registradas no pedido no Supabase. Cada atraso é anotado com a causa. O atraso da transportadora vai para a Gestão de Fornecedores e para o SIP, e o cliente é avisado pelo rastreio.",
+          "origem_do_numero": "Fato da ficha: o Decreto 7.962/2013 obriga informar o prazo de entrega, por isso a meta é 100 % informado. Os 100 % de postagem são meta proposta só sobre o que a vereda controla: o frete é cotado, não garantido (UC), e o SLA não passa do UC. Com uma P2S e uma pessoa, a proteção é avisar antes do vencimento. A entrega final conta todo atraso porque, para o cliente, atraso é promessa quebrada, seja qual for a causa."
+        },
+        {
+          "indicador": "SLA · Peça conforme a prévia",
+          "meta": "100 % das peças enviadas conforme a prévia aprovada (forma, cor, tamanho e nome). Peça fora do padrão é refeita antes de sair.",
+          "como_medir": "Foto da peça ao lado da prévia na conferência antes de embalar. Reclamação ou devolução por divergência fica registrada no pedido.",
+          "origem_do_numero": "Derivação da regra já apresentada, 'a prévia é o contrato'. Os 100 % valem para as peças ENVIADAS, porque a conferência antes de embalar barra a que não está conforme. A folha não usa 'igual': a prévia é digital, e a peça impressa tem linhas de camada e um tom do PLA Matte diferente da tela."
+        },
+        {
+          "indicador": "Interno · Tempo de produção",
+          "meta": "Meta proposta para a cúpula: até 3 dias úteis do início da impressão à peça embalada. Nas outras peças e encomendas, o prazo de produção é o tempo do Bambu Studio × 2 (uma reimpressão) + acabamento, informado na prévia. Essa meta sustenta a data informada ao cliente, e a espera na fila já entra nessa data.",
+          "como_medir": "Data de início na P2S e data de embalagem registradas no pedido",
+          "origem_do_numero": "Derivação com folga, medida só na cúpula. A cúpula leva 11 h 41 min de máquina. Com uma reimpressão, são 2 × 11 h 41 = 23 h 22 no total, e com 20 min de acabamento, 23 h 42, cerca de um dia. Os 3 dias úteis são uma folga escolhida sobre essa conta e não saem dela. As demais peças não têm tempo medido na ficha, por isso usam o tempo que o Bambu Studio calcula."
+        },
+        {
+          "indicador": "Interno · Falha de impressão (reimpressão)",
+          "meta": "Abaixo de 15 % das impressões",
+          "como_medir": "Impressões falhadas divididas pelas impressões iniciadas no mês, com gramas e horas perdidas anotadas no pedido",
+          "origem_do_numero": "Derivação: a pesquisa do Andrey aponta 15 a 25 % de falha para quem está começando, e a meta fica abaixo do piso dessa faixa."
+        },
+        {
+          "indicador": "Interno · Satisfação do cliente",
+          "meta": "Avaliação pedida em 100 % das entregas. A nota média do primeiro mês vira a linha de base e não pode cair nas revisões seguintes.",
+          "como_medir": "Pedido de avaliação após a entrega (e-mail Resend ou WhatsApp); nota registrada no pedido e consolidada no relatório mensal",
+          "origem_do_numero": "Derivação da Melhoria já apresentada (pedir avaliação) e da medida de satisfação citada na decisão sobre IA. Sem histórico, a meta nasce da linha de base medida, não de estimativa. O primeiro mês e a revisão mensal são decisões do plano SLM da vereda, não dados medidos."
+        }
+      ]
+    },
+    "item6_ia": {
+      "folha": "IA limitada ao Desenho e à peça sob encomenda: apoia ideias e prévia, sem dados pessoais. Medida: tempo de produção até a prévia e satisfação. Andrey revisa e aprova cada modelo antes da máquina; o cliente aprova a prévia. Fora da Transição e da Operação.",
+      "slide_titulo": "IA limitada: só no Desenho",
+      "slide_linhas": [
+        "Apoia ideias e a prévia da peça sob encomenda",
+        "Nunca recebe dados pessoais do cliente",
+        "Andrey aprova o modelo; o cliente aprova a prévia",
+        "Fora da Transição e da Operação: não imprime, não precifica, não atende",
+        "Ganho medido: tempo de produção até a prévia e satisfação"
+      ]
+    },
+    "item7_fornecedores": {
+      "folha": "UC = termos de uso: Netlify, Supabase, Resend, Mercado Pago (taxa 4,99%), Melhor Envio. SLA não passa do UC: meta de 100% na postagem; prazo = fila + produção + frete cotado. Atraso do frete: contado, revisado e avisado ao cliente. Motoboy: combinado escrito. Rolo reserva de PLA.",
+      "slide_titulo": "Gestão de Fornecedores sustenta o SLA",
+      "slide_linhas": [
+        "Termos de uso como UC: Netlify, Supabase, Resend",
+        "Mercado Pago: taxa de 4,99 % já no preço",
+        "Prazo = fila + produção + frete cotado no Melhor Envio",
+        "Meta de 100 % na postagem; atraso do frete conta e é avisado",
+        "Motoboy com combinado escrito; rolo reserva de PLA"
+      ]
+    },
+    "item8_fluxo": {
+      "slide_titulo": "Do primeiro contato à revisão",
+      "etapas": [
+        {
+          "etapa": "1. Primeiro contato",
+          "detalhe": "O pedido chega por Instagram, WhatsApp ou site e é registrado no Supabase com data e hora.",
+          "meta_medida_aqui": "Encomenda: começa o tempo de produção até a prévia (interno, IA)",
+          "ia": false
+        },
+        {
+          "etapa": "2. Levantar o pedido e o SLR",
+          "detalhe": "Especificação da peça: modelo do catálogo ou encomenda; cor, tamanho e nome. Nível de serviço de que o cliente precisa: data em que precisa da peça; retirada, motoboy em Palmas ou envio; Pix ou cartão. Preço pela calculadora da loja.",
+          "meta_medida_aqui": "",
+          "ia": false
+        },
+        {
+          "etapa": "3. Ideias com IA (só encomenda)",
+          "detalhe": "A IA apoia formas e o rascunho da prévia a partir só da descrição, sem dados pessoais. Modelo do catálogo pula esta etapa. Nas primeiras encomendas a etapa fica desligada, e a prévia é feita à mão para medir a linha de base.",
+          "meta_medida_aqui": "",
+          "ia": true
+        },
+        {
+          "etapa": "4. Revisão humana e prévia",
+          "detalhe": "Andrey revisa, modela no Blender (o nome entra aqui), fatia no Bambu Studio, checa semelhança com obra protegida, cota o frete no Melhor Envio e envia a prévia com preço e prazo.",
+          "meta_medida_aqui": "Fecha o tempo de produção até a prévia enviada (interno, IA)",
+          "ia": false
+        },
+        {
+          "etapa": "5. Prévia aprovada = SLA",
+          "detalhe": "O cliente aprova a prévia, o preço e a data informada (fila + produção + frete cotado) e paga pelo Mercado Pago.",
+          "meta_medida_aqui": "Prazo informado antes de pagar (100 %, lei); recusa de prévia contada",
+          "ia": false
+        },
+        {
+          "etapa": "6. Impressão",
+          "detalhe": "O pedido sai da fila da P2S com AMS 2 Pro, em PLA Matte (PETG em peça técnica). Se a P2S parar, o cliente é avisado antes do vencimento, com nova data.",
+          "meta_medida_aqui": "Falha abaixo de 15 % (interno); começam os 3 dias úteis (interno)",
+          "ia": false
+        },
+        {
+          "etapa": "7. Acabar, conferir, embalar",
+          "detalhe": "Acabamento e foto da peça ao lado da prévia aprovada antes de embalar. Peça fora do padrão é refeita antes de sair.",
+          "meta_medida_aqui": "Peça conforme a prévia (100 % das enviadas); produção em até 3 dias úteis na cúpula (interno)",
+          "ia": false
+        },
+        {
+          "etapa": "8. Postagem e entrega",
+          "detalhe": "Etiqueta e rastreio no Melhor Envio; em Palmas, retirada ou motoboy. O atraso do frete é avisado pelo rastreio e levado à Gestão de Fornecedores.",
+          "meta_medida_aqui": "Postagem na data prometida (100 %); entrega final com todo atraso contado e causa anotada",
+          "ia": false
+        },
+        {
+          "etapa": "9. Pós-venda",
+          "detalhe": "Pede avaliação e atende reclamação e arrependimento de 7 dias (CDC art. 49).",
+          "meta_medida_aqui": "Reclamação respondida em até 5 dias (100 %); nota de satisfação (interno)",
+          "ia": false
+        },
+        {
+          "etapa": "10. Revisão do serviço",
+          "detalhe": "O relatório mensal (a vereda decidiu revisar uma vez por mês) compara os resultados com o SLA. Atrasos de fornecedor e falhas viram ação no SIP, e a revisão decide se a IA fica.",
+          "meta_medida_aqui": "Todas as metas do SLA e os indicadores internos",
+          "ia": false
+        }
+      ]
+    },
+    "a_risco": {
+      "folha": "Resposta incorreta: prévia que a máquina não reproduz; aprovada, vira SLA impossível e cada cúpula refeita custa até R$ 30,05 e 11h41. Uso indevido: forma parecida com criação protegida (direito autoral) ou dados do cliente no fornecedor da IA.",
+      "slide_titulo": "Risco: erro e uso indevido da IA",
+      "slide_linhas": [
+        "Prévia errada vira promessa que a máquina não cumpre",
+        "Cúpula refeita: até R$ 30,05 e 11 h 41 de máquina",
+        "Forma parecida com criação protegida",
+        "Dados do cliente no fornecedor da IA"
+      ]
+    },
+    "b_protecao": {
+      "folha": "Medida: antes da prévia, Andrey fatia o modelo no Bambu Studio e checa semelhança com criação protegida; a IA só recebe a descrição; o nome entra no Blender. Responsável: Andrey, registrando cada uso e erro para a revisão mensal.",
+      "slide_titulo": "Proteção: uma pessoa aprova antes",
+      "slide_linhas": [
+        "Todo modelo fatiado no Bambu Studio antes da prévia",
+        "Checagem de semelhança com criação protegida",
+        "IA recebe só a descrição; o nome entra no Blender",
+        "Cliente aprova a prévia: a prévia é o contrato",
+        "Responsável: Andrey, registra cada uso e cada erro"
+      ]
+    },
+    "c_continuidade": {
+      "folha": "IA indisponível: prévia feita à mão no Blender; o catálogo nem usa IA. Resposta errada: barrada na revisão. Atendimento, pagamento, impressão e entrega não dependem dela; o prazo só conta após a aprovação. Cliente avisado se a prévia atrasar.",
+      "slide_titulo": "Sem IA, a vereda continua acesa",
+      "slide_linhas": [
+        "IA fora do ar: prévia à mão no Blender",
+        "Resposta errada: barrada na revisão do Andrey",
+        "Catálogo, atendimento, pagamento, impressão e entrega seguem",
+        "Prazo só conta após a prévia aprovada",
+        "Cliente avisado se a prévia atrasar"
+      ]
+    },
+    "d_qualidade": {
+      "folha": "Indicador (medida apresentada): tempo de produção no trecho da IA, da encomenda à prévia enviada. Meta: abaixo da linha de base das primeiras prévias à mão, com satisfação, recusas e reimpressões sem piorar. Sem ganho na revisão, a IA sai.",
+      "slide_titulo": "Qualidade: a IA tem de acelerar",
+      "slide_linhas": [
+        "Indicador: tempo de produção até a prévia enviada",
+        "É a medida já apresentada, junto da satisfação",
+        "Meta: abaixo da linha de base feita à mão",
+        "Satisfação, recusas e reimpressões não pioram",
+        "Sem ganho na revisão, a IA sai"
+      ]
+    }
+  },
+  "problemas_apontados_pelos_ceticos": [
+    {
+      "item": "3. Definição de Processos",
+      "trecho": "2) SLA padrão no catálogo do site, fechado na prévia (peça, preço, prazo); 3) conferir se os UC sustentam o SLA (sem OLA: uma pessoa)",
+      "problema": "A ordem do processo SLM está invertida. Os contratos de apoio (UC) só são conferidos depois que o SLA já foi publicado e fechado na prévia. No ITIL, as metas vindas do SLR são checadas contra os OLAs e os UCs ANTES de o SLA ser acordado. Na ordem da folha, a vereda assina uma promessa e só depois descobre se o fornecedor consegue sustentá-la. O próprio item 8 já segue a ordem certa, porque o frete é cotado antes de o cliente aprovar (etapa 5). Por isso o item 3 contradiz o item 8.",
+      "correcao": "Folha: \"1) levantar o SLR; 2) conferir se os UC sustentam as metas (frete cotado no Melhor Envio, termos dos fornecedores; sem OLA: uma pessoa); 3) SLA padrão publicado no site e fechado na prévia (peça, preço, prazo); 4) monitorar metas em cada pedido; 5) relatório e revisão mensal; 6) melhorias no SIP.\" No slide, a linha \"UC sustenta o SLA; sem OLA (uma pessoa)\" passa para antes de \"SLA: padrão no site, fechado na prévia\"."
+    },
+    {
+      "item": "5. Definição de Métricas e KPIs (e itens 7 e 8, etapa 8)",
+      "trecho": "SLA · Entrega na data informada — \"100 % dos pedidos com a data informada antes do pagamento e cumprida; atraso da transportadora contado à parte\" / \"O frete é cotado, não garantido (UC), por isso o atraso dele é medido à parte\"",
+      "problema": "O KPI não mede o que diz, e o SLA passa do UC. Para o cliente, entrega atrasada é promessa quebrada, seja qual for a causa. O ITIL pede que a medição do SLA reflita a percepção do cliente, e o provedor responde pelo serviço de ponta a ponta, inclusive pela parte do fornecedor. Se o atraso da transportadora sai da conta, o indicador marca 100 % enquanto clientes recebem atrasado. Além disso, prometer 100 % na data de entrega com um frete que a própria folha chama de \"cotado, não garantido\" é um SLA acima do que o UC sustenta. Isso contradiz a regra do item 7, \"SLA nunca passa do UC\". Anotar a causa do atraso está certo, mas isso é insumo da Gestão de Fornecedores e do SIP, não motivo para excluir o atraso do SLA.",
+      "correcao": "Deixar a meta de 100 % só no que a vereda controla e o UC sustenta, e contar todo atraso na entrega final. Linha da tabela: indicador \"SLA · Postagem e entrega na data informada\". Meta: \"100 % dos pedidos postados no Melhor Envio (ou entregues em Palmas, na retirada ou pelo motoboy) até a data prometida antes do pagamento; a entrega final pela transportadora é medida contra a data informada com TODOS os atrasos contados e a causa anotada (vereda ou transportadora)\". Como medir: \"data de postagem e data de entrega no rastreio, registradas no pedido; atraso da transportadora vai para a Gestão de Fornecedores e para o SIP, e o cliente é avisado pelo rastreio\". Etapa 8 do fluxo: \"Postagem na data prometida (100 %); entrega final com todo atraso contado e causa anotada\"."
+    },
+    {
+      "item": "5. Definição de Métricas e KPIs (e fluxo, etapas 6 e 7)",
+      "trecho": "SLA · Tempo de produção — \"Até 3 dias úteis do início da impressão à peça embalada; havendo fila na P2S, a espera já entra no prazo informado\"",
+      "problema": "Uma meta interna foi rotulada como SLA. O relógio começa no \"início da impressão\", um evento que o cliente não vê nem controla, e a espera na fila fica de fora da conta. O que o cliente acordou foi a data informada. Os 3 dias úteis são meta de um componente interno que sustenta essa data. Numa empresa com equipe, esse seria o papel de um OLA. Como a própria folha diz \"sem OLA: uma pessoa\", a meta deve aparecer como Interno, igual à falha de impressão, e não como SLA. Esse é o caso de SLA confundido com meta interna.",
+      "correcao": "Na tabela: \"Interno · Tempo de produção — até 3 dias úteis do início da impressão à peça embalada; sustenta a data informada ao cliente\". Folha do item 5: \"SLA: reclamação respondida em até 5 dias; prazo informado antes de pagar e cumprido; peça igual à prévia. Interno: produção em até 3 dias úteis; falha de impressão abaixo de 15%; satisfação não abaixo da linha de base. Medido no pedido (Supabase).\" No fluxo: etapa 6, \"Falha abaixo de 15 % (interno); começam os 3 dias úteis (interno)\"; etapa 7, \"Peça igual à prévia (100 %); produção em até 3 dias úteis (interno)\"."
+    },
+    {
+      "item": "8. Fluxo do Desenho de Serviço (etapa 2)",
+      "trecho": "\"2. Levantar o SLR\" — \"Modelo do catálogo ou peça sob encomenda; cor, tamanho e nome; preço pela calculadora da loja.\"",
+      "problema": "O que está nessa etapa não é SLR. Modelo, cor, tamanho e nome são a especificação do produto, ou seja, o que a peça é (requisito funcional ou utilidade). Preço é preço. SLR é requisito de NÍVEL de serviço: quando, como e com que garantia o serviço é entregue. O principal SLR que a própria folha lista no item 2, o prazo, não é levantado aqui. Ele só aparece na etapa 4, já como oferta da vereda, sem que se saiba de quando o cliente precisa da peça.",
+      "correcao": "\"2. Levantar o pedido e o SLR: especificação da peça (modelo do catálogo ou encomenda; cor, tamanho e nome) e o nível de serviço que o cliente precisa (data em que precisa da peça; retirada, motoboy em Palmas ou envio; Pix ou cartão); preço pela calculadora da loja.\""
+    },
+    {
+      "item": "item5_kpis (linha 'SLA · Tempo de produção') + item8_fluxo (etapas 6 e 7)",
+      "trecho": "Até 3 dias úteis do início da impressão à peça embalada ... 'Derivação: a cúpula leva 11 h 41 min de máquina; mesmo com uma reimpressão (23 h 22 min) e 20 min de acabamento, cabe em 3 dias úteis'",
+      "problema": "O número '3 dias úteis' não está na ficha. A conta 11h41 × 2 + 20 min = 23h42 está certa, mas mostra só que cabe em cerca de 1 dia de máquina. O '3' é uma folga escolhida, não sai da conta. Além disso, a ficha mede só a CÚPULA. O resto da luminária Vereda e os vasos, enfeites e lembranças não têm tempo medido. Assim a meta vira promessa para todas as peças apoiada numa medida de uma só parte, e 'uma reimpressão (23 h 22 min)' dá a entender que a reimpressão sozinha leva 23h22.",
+      "correcao": "Mostrar que é uma decisão com folga e dizer a que peça vale. Exemplo: 'Meta proposta: até 3 dias úteis. Base: cúpula = 11h41; com uma reimpressão = 23h22 no total; + 20 min de acabamento = 23h42.' Para as outras peças ou encomendas: 'prazo de produção = tempo do Bambu Studio × 2 (uma reimpressão) + acabamento, informado na prévia'. Trocar '(23 h 22 min)' por '(2 × 11h41 = 23h22 no total)'."
+    },
+    {
+      "item": "item5_kpis (linha 'SLA · Entrega na data informada')",
+      "trecho": "100 % dos pedidos com a data informada antes do pagamento e cumprida",
+      "problema": "A lei da ficha (Decreto 7.962/2013) obriga a INFORMAR o prazo. O '100 % cumprida' não vem da ficha. Com uma só P2S e uma só pessoa, sem máquina reserva, uma quebra da impressora ou uma doença do Andrey já quebra a meta, e o plano de continuidade (c) só cobre a IA fora do ar, não a impressora. Isso bate de frente com o hero 'a vereda só promete o que consegue cumprir'.",
+      "correcao": "Separar em duas partes. 1) 'Data informada antes de pagar: 100 % (lei)'. 2) 'Data cumprida: medida em cada pedido, com a causa anotada; se a P2S parar, o cliente é avisado ANTES do vencimento, com nova data'. Se quiser manter 100 %, chamar de meta e citar esse aviso antecipado como proteção. Não apresentar como garantia."
+    },
+    {
+      "item": "item5_kpis (linha 'SLA · Peça conforme a prévia') + item8_fluxo etapa 7",
+      "trecho": "100 % das peças iguais à prévia aprovada / Peça igual à prévia (100 %)",
+      "problema": "Ao pé da letra, a promessa é impossível. A prévia é digital (render), e a peça em FDM tem linhas de camada e o tom do PLA Matte muda em relação à tela. 'Igual' não é verificável. O 100 % em si se sustenta porque existe a conferência antes de embalar.",
+      "correcao": "Trocar 'iguais' por 'conforme a prévia aprovada (forma, cor, tamanho e nome), conferida por foto ao lado da prévia antes de embalar'. O 100 % vale para as peças ENVIADAS; peça fora do padrão é refeita antes de sair."
+    },
+    {
+      "item": "item6_ia (slide) + d_qualidade",
+      "trecho": "Ganho medido: tempo até a prévia / Indicador: tempo da encomenda até a prévia enviada ... Travas: recusas, reimpressões e satisfação não pioram",
+      "problema": "A decisão de IA já apresentada citou como medida 'tempo de produção e satisfação'. A folha troca o indicador principal por 'tempo até a prévia' e rebaixa a satisfação a trava. O slide do item 6 nem cita satisfação. A banca pode ler isso como uma medida diferente da que foi apresentada.",
+      "correcao": "Ligar à medida já apresentada. Exemplo: 'Medida (a mesma da decisão): tempo de produção, no trecho que a IA toca (encomenda → prévia enviada), e satisfação do cliente'. No slide do item 6: 'Ganho medido: tempo de produção até a prévia e satisfação'."
+    },
+    {
+      "item": "d_qualidade (em conflito com item6_ia e item8_fluxo etapa 3)",
+      "trecho": "Meta: abaixo da linha de base do primeiro mês sem IA",
+      "problema": "A linha de base pede um 'primeiro mês sem IA', mas o fluxo (etapa 3) e o item 6 põem a IA em uso desde o início, e a decisão apresentada foi 'adotar limitada'. O período sem IA não aparece em lugar nenhum. Além disso, num negócio de uma pessoa que está começando, um mês pode ter pouquíssimas encomendas, e a linha de base fica frágil.",
+      "correcao": "Escolher uma das duas: (a) declarar no fluxo 'no primeiro mês a etapa 3 fica desligada para medir a linha de base' (continua fora da Transição e da Operação, porque é só não usar); ou (b) tirar a linha de base das prévias feitas à mão no Blender (sem IA), sem amarrar a um mês."
+    },
+    {
+      "item": "item3_processos, item5_kpis, item8_fluxo etapa 10, b_protecao, d_qualidade (baixa gravidade)",
+      "trecho": "relatório e revisão mensal / nota média do primeiro mês vira a linha de base / Sem ganho na revisão mensal, a IA sai",
+      "problema": "A frequência 'mensal' e o 'primeiro mês' não estão na ficha. Não são números inventados como fato, e sim decisões de gestão do próprio plano SLM, então é aceitável. Fica o registro para não serem apresentados como dado verificado.",
+      "correcao": "Manter, mas apresentar como decisão do plano (exemplo: 'a vereda decide revisar uma vez por mês'). Nenhuma fonte é necessária."
+    }
+  ]
+}
