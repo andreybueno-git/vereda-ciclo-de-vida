@@ -1,6 +1,6 @@
 # vereda — da ideia à luz
 
-Apresentação interativa de **16 capítulos** sobre o serviço da Vereda, SLM e uso limitado de IA. A experiência começa com um notebook fechado: você abre a tampa, liga o computador e escolhe no Terminal entre a apresentação e um jogo. A narrativa acompanha a ideia no notebook, a revisão e o fatiamento, o acordo com o cliente, a impressão e a peça acesa. Cada capítulo mantém acesso ao conteúdo acadêmico completo pelo botão **Conteúdo de SLM**.
+Apresentação interativa de **16 capítulos** sobre o serviço da Vereda, SLM e uso limitado de IA. Ao abrir o link, uma breve animação mostra um personagem caminhando com a marca Vereda no celular. Em seguida, aparece o notebook fechado: você abre a tampa, liga o computador e escolhe no Terminal entre a apresentação e um jogo. A narrativa acompanha a ideia no notebook, a revisão e o fatiamento, o acordo com o cliente, a impressão e a peça acesa. Cada capítulo mantém acesso ao conteúdo acadêmico completo pelo botão **Conteúdo de SLM**.
 
 O notebook tem nove aplicativos: **Terminal, Internet, Projeto.stl, Fatiador, Acordo, Guia SLM, Luz, Pega-luz e Palavra**. Seu teclado 3D, mouse e trackpad controlam esse ambiente local; cinco adesivos personalizam a carcaça. O computador ampliado permite explorar o mesmo modelo, inspecionar camadas e percorrer as confirmações de um pedido. **Arquivo, aprovação, pagamento e envio à Bambu são uma simulação local.** Não há upload, cobrança, transmissão para impressora ou registro de pedido em serviço externo.
 
@@ -26,7 +26,7 @@ No Mac, `Abrir apresentacao.command` é uma alternativa: inicia o servidor numa 
 
 Experimente esta sequência:
 
-1. Clique no notebook fechado ou em **Abrir notebook**. Com a tampa aberta, acione **Ligar notebook**. A marca aparece na tela durante a breve inicialização visual.
+1. Aguarde a abertura ou escolha **Entrar agora** (Esc também funciona). Clique no notebook fechado ou em **Abrir notebook**. Com a tampa aberta, acione **Ligar notebook**. A marca aparece na tela durante a breve inicialização visual.
 2. No Terminal, escolha **Iniciar apresentação** ou digite `-- start vereda` e pressione Enter. `start vereda`, sem os dois traços, também funciona. A transição aproxima a tela e libera a história; a sequência de 16 capítulos começa em seguida.
 3. Para brincar antes ou depois, escolha **Pega-luz** no Terminal ou digite `open jogo`. Clique em **Jogar**; use setas, WASD ou os botões de direção para alcançar os oito pontos de luz. Para adivinhar palavras de cinco letras, abra **Palavra** ou digite `start termo`. `help` mostra os outros comandos; `open projeto` abre o projeto demonstrativo.
 4. Durante a história, entre no computador pelo botão do capítulo Desenho. No Projeto.stl, gire a prévia, escolha a cor e confirme a revisão humana. Abra o Fatiador e inspecione as camadas; no Acordo, confirme prévia, preço, prazo, aprovação e pagamento simulados. O envio leva à impressão conduzida pela rolagem.
@@ -44,6 +44,12 @@ Experimente esta sequência:
 - A inspeção de camadas corta a **visualização**, sem reduzir a peça do pedido. Mudanças que invalidam o acordo exigem novas confirmações.
 - O aplicativo Luz mostra a peça em um ambiente com aparador, janela, livros e planta; seu controle de luz altera a atmosfera junto da luminária.
 - Esc fecha dialogs e janelas conforme o contexto. A abertura oferece um caminho explícito direto para a apresentação.
+
+## Abertura ao entrar no link
+
+O personagem caminha enquanto o ateliê carrega, com a logo oficial na tela do celular. A animação é um SVG local e leve, sem vídeo ou dependência 3D. A tela aguarda fonte e cena (incluindo fallback) e mantém cerca de 2,4 segundos para a pequena sequência visual; não exibe uma porcentagem fictícia. Depois, dissolve para o notebook fechado. **Entrar agora** e Esc dispensam a animação.
+
+O limite de espera é de oito segundos, com uma proteção independente de nove segundos se o controlador não carregar. Movimento reduzido desativa o ciclo e a espera mínima; ocultar a aba pausa a animação. Links para capítulos preservam seu destino. Sem JavaScript, a abertura fica oculta e o conteúdo segue disponível.
 
 ## Internet no notebook
 
@@ -78,6 +84,7 @@ A luminária da cena é um estudo visual compartilhado pelo mundo 3D, desktop e 
 | Arquivo/pasta | Responsabilidade |
 |---|---|
 | `index.html` | Capítulos, controles e integração dos scripts da versão ativa. |
+| `page-loader-art.html`, `page-loader.css`, `page-loader.js` | Abertura da página: personagem com celular, prontidão dos recursos e saída para o notebook. |
 | `atelier.css`, `atelier.js` | Layout, navegação, índice, conteúdo completo e integração dos módulos. |
 | `story-content.js`, `docs/` | Conteúdo acadêmico, rastreabilidade e documentos-fonte. |
 | `atelier-forms.js` | Factory `VeredaForms.createLamp`, compartilhada pelas três prévias. |
@@ -99,10 +106,11 @@ Notebook e impressora foram gerados no [Higgsfield 3D Jutsu — Vereda Atelier](
 
 `VeredaDesktop.expand()`/`collapse()` movem o mesmo elemento entre cena e dialog, sem recriar o aplicativo. `VeredaDesktop` e o editor separado `VeredaStudio` também podem trocar snapshots por `getState()`/`syncState()` e callbacks `onChange`, sem emitir um ciclo de alterações. Cores, carga do projeto, revisão, fatiamento, camadas, acordo, aprovação e pagamento compõem esse contrato. A mesma factory de luminária alimenta os três contextos visuais.
 
-O ZIP de entrega contém a versão ativa. Arquivos históricos como `boot.js`/`boot.css`, `surreal.*`, `fonts.css`, `notes.js`, `higgsfield-scene.js`, bibliotecas antigas na raiz e `assets/higgsfield/` podem continuar na pasta de trabalho, mas **ficam fora do ZIP** e não são carregados pelo `index.html` atual. O preloader de tela inteira foi substituído pela entrada no notebook.
+O ZIP de entrega contém a versão ativa. Arquivos históricos como `boot.js`/`boot.css`, `surreal.*`, `fonts.css`, `notes.js`, `higgsfield-scene.js`, bibliotecas antigas na raiz e `assets/higgsfield/` podem continuar na pasta de trabalho, mas **ficam fora do ZIP** e não são carregados pelo `index.html` atual. O antigo `boot.*` foi substituído pela entrada interativa. A abertura atual usa `page-loader.*` e vem antes do notebook; não abre a tampa nem liga o computador automaticamente.
 
 ## Estado da verificação
 
+- **Abertura da página:** 46 verificações isoladas de prontidão, timeout, Skip/Esc, falhas, movimento reduzido, foco e limpeza passaram. Em navegador, a arte foi inspecionada em 1280×720, 407×734 e 319×640. Saída automática, Entrar agora, Esc, notebook fechado → tampa → energia → Terminal, entrada direta na história e recarregamento em `#desenho` foram conferidos.
 - **Conteúdo:** 16 IDs únicos; as 126 strings não vazias de `final` foram encontradas literalmente nos detalhes. Fluxo de dez etapas, tabela de seis indicadores e qualificadores conferidos. O JSON foi comparado byte a byte com a fonte original.
 - **Estúdio:** sintaxe e testes isolados de ordem das etapas, fallback sem WebGL, camadas, invalidação das confirmações, envio único e reabertura passaram.
 - **Desktop e sincronização:** o fluxo de preparação/envio foi verificado em navegador isolado, sem erros registrados nessa verificação. Terminal, Pega-luz, teclas físicas, mouse e trackpad tiveram seus caminhos principais conferidos; ampliar e retornar preservam o mesmo aplicativo.

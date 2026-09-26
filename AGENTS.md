@@ -1,6 +1,6 @@
 # Vereda — apresentação
 
-Esta pasta contém a versão atual **Da ideia à luz**, uma narrativa de 16 capítulos precedida por notebook fechado → abrir tampa → ligar → marca na tela → Terminal → jogo ou apresentação. `start vereda` conduz pela transição à história, ao fatiamento demonstrativo, à aprovação, à impressão dirigida pelo scroll e à luz final. Não restaurar a luminária de cogumelo/portal rejeitada, o preloader anterior de tela inteira ou a combinação antiga de fontes por conveniência.
+Esta pasta contém a versão atual **Da ideia à luz**, uma narrativa de 16 capítulos precedida por abertura com personagem e celular → notebook fechado → abrir tampa → ligar → marca na tela → Terminal → jogo ou apresentação. `start vereda` conduz pela transição à história, ao fatiamento demonstrativo, à aprovação, à impressão dirigida pelo scroll e à luz final. Não restaurar a luminária de cogumelo/portal rejeitada, o preloader histórico `boot.*` ou a combinação antiga de fontes por conveniência.
 
 ## Fonte de verdade e conteúdo
 
@@ -15,6 +15,7 @@ Esta pasta contém a versão atual **Da ideia à luz**, uma narrativa de 16 cap�
 ## Arquitetura ativa
 
 - `index.html`: capítulos, controles e integração dos módulos. Não carrega `boot.js`/`boot.css` nem markup do preloader antigo.
+- `page-loader-art.html`/`page-loader.css`/`page-loader.js`: abertura solicitada ao carregar o link, antes do notebook. SVG local com logo oficial no celular, dialog nativo, skip/Esc e prontidão real de fonte/cena (sucesso ou fallback). Mínimo visual 2,4 s, máximo 8 s, watchdog independente 9 s no head; reduzido elimina animação e mínimo. Registrar antes de `atelier-scene.js`. Nunca alterar o inert da entrada, abrir/ligar o notebook ou perder hash/scroll ao fechar. Gerar index com `tools/build-index.cjs`.
 - `atelier.css`/`atelier.js`: visual, navegação, conteúdo completo e ligação entre módulos.
 - `atelier-forms.js`: `VeredaForms.createLamp({color})`; grupo compartilhado por cena, desktop e estúdio. Manter a mesma forma e cor na trajetória.
 - `atelier-scene.js`: mundo Three, câmera, notebook/impressora, abertura articulada, camadas, projeção do desktop e inclinação suave pelo ponteiro. A resposta ao ponteiro respeita pausa e movimento reduzido; um ponteiro de mouse continua funcionando em painéis estreitos. Resize e homografia usam o retângulo real do canvas, incluindo deslocamentos.
