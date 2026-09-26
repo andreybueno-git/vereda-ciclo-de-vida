@@ -27,3 +27,14 @@ body[data-chapter='0'] .stage-caption{display:none}
 .mobile-studio-launch{display:none}@media(max-width:760px){body[data-chapter='0'] .mobile-studio-launch,body[data-chapter='5'] .mobile-studio-launch,body[data-chapter='6'] .mobile-studio-launch{display:block;position:fixed;z-index:9;top:53svh;left:50%;transform:translateX(-50%);border:1px solid var(--border);border-radius:4px;background:var(--surface);padding:12px 17px;font-size:12px;white-space:nowrap}}
 
 .terminal-cue{font-size:11px;line-height:1.6;color:var(--muted);max-width:31ch;margin:13px 0 0}.terminal-cue code{font-family:ui-monospace,monospace;color:var(--accent);font-size:12px;background:#b4552d0b;padding:2px 4px;border:1px solid #b4552d22;border-radius:3px}
+
+/* Five continuous speaking parts, preserving the original chapter controls. */
+#index-dialog .index-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 36px}
+#index-dialog .index-person{min-width:0;margin:0;padding-top:15px;border-top:1px solid #b4552d66}
+#index-dialog .index-person-label{display:flex;justify-content:space-between;gap:12px;margin:0;font-size:11px;font-weight:700;line-height:1.5;color:#934220}
+#index-dialog .index-person-label span{font-size:10px;font-weight:400;color:#61665e;white-space:nowrap}
+#index-dialog .index-person h3{margin:9px 0 6px;font-size:18px;line-height:1.3;font-weight:550}
+#index-dialog .index-grid{grid-template-columns:minmax(0,1fr);gap:0}
+#index-dialog .index-grid button{width:100%;min-height:44px;padding:12px 0;gap:15px;font-size:13px;line-height:1.45}
+#index-dialog .index-grid button[aria-current='true']{color:#934220}
+@media(max-width:760px){#index-dialog .index-groups{grid-template-columns:minmax(0,1fr);gap:26px}#index-dialog .index-person h3{font-size:18px}}

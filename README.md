@@ -34,6 +34,8 @@ Experimente esta sequência:
 
 **Ampliar computador** abre os mesmos aplicativos em um dialog, com a mesma janela, entrada e estado. Na abertura, o mouse e o desktop interativo permanecem disponíveis também em janelas estreitas; Ampliar é opcional. Durante a história, até 760 px, o desktop abre ampliado para não cobrir o texto que rola. Teclado, mouse e trackpad 3D funcionam quando o desktop está projetado na cena. **Ir direto à apresentação** dispensa a abertura, e links diretos como `#desenho` preservam o capítulo solicitado.
 
+O **Índice** divide a apresentação em cinco partes: Andrey, capítulos 1–3 (Contexto e requisitos); Gabriel, 4–6 (Planejamento e desenho); Rayane, 7–10 (Do acordo à entrega); Pedro, 11–13 (Indicadores, IA e proteção); João Vitor, 14–16 (Continuidade e melhoria). Os capítulos permanecem na ordem original.
+
 - Role para acompanhar as transformações. Setas, PageUp/PageDown e Espaço navegam entre capítulos; Home/End vão ao começo/fim.
 - `I` abre o índice; `N` abre o conteúdo completo do capítulo. Os atalhos da apresentação não devem interferir em campos, desktop ou dialogs.
 - Os botões do cabeçalho controlam pausa e tela cheia. Os controles da peça permitem girar e alternar a luz. O ponteiro também produz uma inclinação discreta da cena; pausa e movimento reduzido desativam essa resposta.
