@@ -75,6 +75,8 @@ A rodada fica salva neste navegador, inclusive o palpite em andamento. O banco r
 
 ## Conteúdo e limites da demonstração
 
+O capítulo 2, na parte do Andrey, inclui **Estratégia e diferenciais** na tela principal e no conteúdo detalhado: personalização, preço acessível, rapidez na produção e combinação de elegância com tecnologia. O trecho recupera a Estratégia de Serviço da folha de 12/09/2026, conferida na foto enviada; os diferenciais são apresentados como proposta do negócio.
+
 `docs/respostas-slm.json` é a fonte das respostas finais e dos dez apontamentos dos revisores. `docs/folha-slm-respondida.html` conserva a folha respondida. `story-content.js` organiza 16 capítulos e seus fragmentos completos, com rastreamento até as fontes. A narrativa visual é uma síntese; os detalhes mantêm qualificadores, tabela de indicadores e as dez etapas do fluxo.
 
 A ordem preservada é **SLR → conferir UC → acordar SLA → monitorar → revisar → SIP**. IA fica no Desenho da encomenda, sem dados pessoais, com revisão humana. O prazo do cliente reúne fila, produção e frete cotado; aprovação e pagamento precedem a impressão.

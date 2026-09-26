@@ -38,3 +38,5 @@ body[data-chapter='0'] .stage-caption{display:none}
 #index-dialog .index-grid button{width:100%;min-height:44px;padding:12px 0;gap:15px;font-size:13px;line-height:1.45}
 #index-dialog .index-grid button[aria-current='true']{color:#934220}
 @media(max-width:760px){#index-dialog .index-groups{grid-template-columns:minmax(0,1fr);gap:26px}#index-dialog .index-person h3{font-size:18px}}
+
+.strategy-note{max-width:43ch;margin:20px 0 0;padding-top:15px;border-top:1px solid var(--border)}.strategy-note h3{margin:0 0 7px;font-size:13px;line-height:1.4;font-weight:650;color:var(--accent)}.strategy-note p{margin:0;font-size:14px;line-height:1.6;color:var(--muted)}
